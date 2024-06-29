@@ -1,0 +1,27 @@
+@tailwind base;
+  @tailwind components;
+  @tailwind utilities;
+
+
+  .wave-1-bg {
+    background-image: url("../public/assets/images/wave-1.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  .box-bg-image {
+    background-image: url("../public/assets/images/box-bg-image.png");
+    background-repeat: no-repeat;
+    background-size: 60% 100%;
+    background-position: center;
+  }
+  
+  .image-shadow {
+    filter: drop-shadow(10px 10px 5px #9A65CF);
+  }
+
+  @media screen and (max-width: 1024px) {
+    .box-bg-image {
+      background-size: 100% 100%;
+    }
+  }
