@@ -80,7 +80,7 @@ const SignIn = () => {
           <div className='mt-4 flex flex-col gap-y-4 w-full max-w-[482px] items-center'>
             <p className='text-black-2 font-medium text-[10px] sm:text-sm'>By Signing up, you agree to our <Link href="#"  className="text-[#3FBFA9]">Term & Conditions</Link> and <Link href="#"  className="text-[#3FBFA9]">Privacy Policy</Link></p>
             <Button variant="default" className='w-full' type="submit">Login</Button>
-            <p className='text-black-2 font-medium text-[10px] sm:text-sm'>Don't have an account? <Link href="/signup"  className="text-primary-1">Register</Link></p>
+            <p className='text-black-2 font-medium text-[10px] sm:text-sm'>Don&rsquo;t have an account? <Link href="/signup" className="text-primary-1">Register</Link></p>
           </div>
 
         </form>

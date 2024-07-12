@@ -193,7 +193,7 @@ const Provider = () => {
                         <SelectContent>
                           {
                             serviceOptions.map((option) => (
-                              <SelectItem value={option}>{option}</SelectItem>
+                              <SelectItem key={option} value={option}>{option}</SelectItem>
                             ))
                           }
                         </SelectContent>
@@ -365,7 +365,7 @@ const Provider = () => {
           <div className='mt-4 flex flex-col gap-y-4  w-full max-w-[482px] items-center'>
             <p className='text-black-2 font-medium text-[10px] sm:text-sm'>By Signing up, you agree to our <Link href="#"  className="text-[#3FBFA9]">Term & Conditions</Link> and <Link href="#"  className="text-[#3FBFA9]">Privacy Policy</Link></p>
             <Button variant="default" className='w-full' type="submit">Register</Button>
-            <p className='text-black-2 font-medium text-[10px] sm:text-sm'>Have an account? <Link href="#"  className="text-primary-1">Login</Link></p>
+            <p className='text-black-2 font-medium text-[10px] sm:text-sm'>Have an account? <Link href="/signin"  className="text-primary-1">Login</Link></p>
           </div>
 
         </form>
