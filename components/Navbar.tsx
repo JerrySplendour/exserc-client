@@ -32,7 +32,7 @@ const Navbar = () => {
                     }
                 </div>
                 <div className='flex items-center gap-6'>
-                    <Button variant="default" size="sm" >Get Started</Button>
+                    <Button variant="default" size="sm" ><Link href={'/signup'}>Get Started</Link></Button>
                     <figure className='w-[30px] h-[30px] lg:hidden cursor-pointer'>
                     <SheetTrigger className='w-full h-full tracking'><HamburgerMenuIcon className='w-full h-full tracking' /></SheetTrigger>
                     </figure>
