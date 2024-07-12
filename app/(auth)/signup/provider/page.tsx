@@ -218,7 +218,7 @@ const Provider = () => {
                         <SelectContent>
                           {
                             skillOptions.map((option) => (
-                              <SelectItem value={option}>{option}</SelectItem>
+                              <SelectItem key={option} value={option}>{option}</SelectItem>
                             ))
                           }
                         </SelectContent>
@@ -280,7 +280,7 @@ const Provider = () => {
                       <SelectContent>
                         {
                           intervalOptions.map((option) => (
-                            <SelectItem value={option}>{option}</SelectItem>
+                            <SelectItem key={option} value={option}>{option}</SelectItem>
                           ))
                         }
                       </SelectContent>
@@ -306,7 +306,7 @@ const Provider = () => {
                       <SelectContent>
                         {
                           countries?.map((option: string) => (
-                            <SelectItem value={option}>{option}</SelectItem>
+                            <SelectItem key={option} value={option}>{option}</SelectItem>
                           ))
                         }
                       </SelectContent>

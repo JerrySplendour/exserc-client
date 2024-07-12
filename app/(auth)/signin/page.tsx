@@ -44,8 +44,7 @@ const SignIn = () => {
       <Form {...form}>
         <form className='flex items-center flex-col gap-y-4 w-full max-w-[1024px] px-4' onSubmit={form.handleSubmit(onSubmit)}>
           <div className='flex flex-col w-full items-center'>
-              {/* <Image src="/assets/images/logo-1.png" alt='profile' className='z-0' width={143} height={48} /> */}
-            <h1 className='font-bold text-2xl sm:text-3xl text-center text-black-1 mb-8'>Login <br /></h1>
+            <h1 className='font-bold text-2xl sm:text-3xl text-center text-black-1 mb-8'>Login</h1>
           </div>
           <div className="flex flex-col gap-y-5 w-full max-w-[482px]">
             <div>
@@ -78,7 +77,7 @@ const SignIn = () => {
             </div>
               
           </div>
-          <div className='mt-4 flex flex-col gap-y-4  w-full max-w-[482px] items-center'>
+          <div className='mt-4 flex flex-col gap-y-4 w-full max-w-[482px] items-center'>
             <p className='text-black-2 font-medium text-[10px] sm:text-sm'>By Signing up, you agree to our <Link href="#"  className="text-[#3FBFA9]">Term & Conditions</Link> and <Link href="#"  className="text-[#3FBFA9]">Privacy Policy</Link></p>
             <Button variant="default" className='w-full' type="submit">Login</Button>
             <p className='text-black-2 font-medium text-[10px] sm:text-sm'>Don't have an account? <Link href="/signup"  className="text-primary-1">Register</Link></p>
