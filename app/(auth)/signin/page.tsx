@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import Link from 'next/link';
+import Image from 'next/image'
 
 const SignIn = () => {
 
@@ -43,8 +44,15 @@ const SignIn = () => {
     <div className='flex items-center justify-center w-full h-screen'>
       <Form {...form}>
         <form className='flex items-center flex-col gap-y-4 w-full max-w-[1024px] px-4' onSubmit={form.handleSubmit(onSubmit)}>
-          <div className='flex flex-col w-full items-center'>
-            <h1 className='font-bold text-2xl sm:text-3xl text-center text-black-1 mb-8'>Login</h1>
+          <div className='flex flex-col w-full items-center gap-2'>
+            <div>
+              <Link href="/">
+                <div className='w-12 h-12 rounded-md overflow-hidden'>
+                  <Image src='/assets/images/pp.png' className='block w-full h-full object-cover' alt='logo' width={50} height={50} />
+                </div>
+              </Link>
+            </div>
+            <h1 className='font-bold text-2xl sm:text-3xl text-center text-black-1 mb-6'>Login</h1>
           </div>
           <div className="flex flex-col gap-y-5 w-full max-w-[482px]">
             <div>

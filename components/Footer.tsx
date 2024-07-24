@@ -8,7 +8,7 @@ const Footer = () => {
             <div className="p-5 lg:p-10 flex flex-col md:flex-row gap-y-7 items-start justify-between max-w-[1200px w-full lg:gap-x-40">
                 <aside className='justify-items-start'>
                     <figure>
-                        <Image src='/assets/images/logo-2.png' className='block w-full h-full object-cover' alt='logo' width={160} height={50} />
+                        <Image src='/assets/images/logo-2.png' className='block w-full h-full object-cover' alt='logo' width={130} height={50} />
                     </figure>
                     <p>
                     Providing reliable Services
@@ -71,7 +71,7 @@ const Footer = () => {
             </div>
         <div className="pt-8 flex items-center justify-center border-t-[1px] border-[#ffffff42] w-[98%]">
             <aside>
-                <p className='text-sm md:text-base'>Copyright © ${new Date().getFullYear()} - All right reserved by PremScent</p>
+                <p className='text-sm md:text-base'>{`Copyright © ${new Date().getFullYear()} - All right reserved by PremScent`}</p>
             </aside>
         </div>
     </footer>

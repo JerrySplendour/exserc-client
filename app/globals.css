@@ -2,6 +2,8 @@
   @tailwind components;
   @tailwind utilities;
 
+  /* import the Dropdown Tree dependency styles */
+
 
   .wave-1-bg {
     background-image: url("../public/assets/images/wave-1.png");
@@ -14,6 +16,24 @@
     background-repeat: no-repeat;
     background-size: 100% 100%;
     background-position: center;
+  }
+
+  .seeker-bg-image {
+    background-image: url("../public/assets/images/seeker-bg-image.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+  }
+
+  .seeker-bg-image::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: #000000a0;
   }
   
   .image-shadow {

@@ -7,6 +7,7 @@ import { useEffect } from "react";
 
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import Link from "next/link";
 
 export default function Home() {
 
@@ -26,8 +27,8 @@ export default function Home() {
               <h2 className="font-bold text-3xl lg:text-[40px] text-black-1 lg:leading-[48px]">Discover Local <br /> Service Providers <br /> near You</h2>
               <h3 className="font-normal text-sm text-[#3C3742B2] mt-6 lg:mt-10">What do you need help with?</h3>
               <div className="flex items-center justify-between gap-3">
-                <Button variant="default" size="sm" >Find Service Providers</Button>
-                <Button variant="outline" size="sm" >Offer Your Services</Button>
+                <Button variant="default" size="sm" ><Link href="/seeker">Find Service Providers</Link></Button>
+                <Button variant="outline" size="sm" ><Link href="/provider">Offer Your Services</Link></Button>
               </div>
           </div>
         </div>

@@ -8,6 +8,7 @@ import { usePathname } from 'next/navigation'
 import { cn, links } from '@/lib/utils'
 import { HamburgerMenuIcon } from '@radix-ui/react-icons'
 import { SheetTrigger } from './ui/sheet'
+import { FaMapLocationDot } from 'react-icons/fa6'
 
 
 
@@ -21,7 +22,7 @@ const Navbar = () => {
                     <Image src='/assets/images/logo-1.png' className='block w-full h-full object-cover' alt='logo' width={160} height={50} />
                 </figure>
             </div>
-            <div className='flex gap-2 w-full justify-end lg:justify-between'>
+            <div className='flex gap-2 w-full justify-end lg:gap-32'>
                 <div className='items-center gap-12 hidden lg:flex'>
                     {
                         links.map(({name, path}) => (
