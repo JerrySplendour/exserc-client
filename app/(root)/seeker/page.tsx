@@ -87,7 +87,7 @@ const Seeker = () => {
                                                             <ul className='text-lg font-light text-black-1'>
                                                                 {
                                                                     ["warri, dsc round-about","warri, Ebrumede secondary school","warri, Ugbomro, girls hostel. Delta state", "warri, Ugbomro, federal university petroleum university"].map((address) => (
-                                                                            <li onClick={() => setCurrentLocation(address)}>
+                                                                            <li key={address} onClick={() => setCurrentLocation(address)}>
                                                                                 <DialogTrigger className='flex items-center gap-2'>
                                                                                     <MdLocationPin className="w-3 h-3 text-primary-1" />
                                                                                     <p className='text-[14px] text-black-2 hover:text-black-1 transition-all cursor-pointer'>{address}</p>
