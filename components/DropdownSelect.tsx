@@ -76,11 +76,11 @@ const DropdownSelect = () => {
         </div>
         {/* dropdown items */}
         {
-            open && (
-                <div ref={dropdownRef}  className='p-2 bg-white rounded-md w-full h-fit absolute top-[115%] border-2 border-primary-1'>
-                    <List setSelected={setSelected} items={data} />
-                </div>
-            )
+          open && (
+              <div ref={dropdownRef}  className='p-2 bg-white rounded-md w-full h-fit absolute top-[115%] border-2 border-primary-1'>
+                  <List setSelected={setSelected} items={data} />
+              </div>
+          )
         }
     </div>
   )

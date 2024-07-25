@@ -25,9 +25,14 @@ import { MdLocationPin } from 'react-icons/md'
 const Seeker = () => {
   
   const [searchText, setSearchText] = useState<string>("")
+  const [currentLocation, setCurrentLocation] = useState<string>("Uvwie, Warri")
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value)
+  }
+
+  const handleSelectCurrentLocation = () => {
+    setCurrentLocation("Effurun, PTI road Masojie")
   }
       
   return (
@@ -55,7 +60,7 @@ const Seeker = () => {
                                 <Dialog>
                                     <DialogTrigger className="self-start w-full">
                                         <div className='bg-[#ffffffc0] gap-0 self-start px-4 py-1 rounded hover:bg-white hover:shadow-md transition-all cursor-pointer w-full'>
-                                            <p className='text-sm text-start'>Uvwie, Warri</p>
+                                            <p className='text-sm text-start'>{currentLocation}</p>
                                             <div className='flex items-center gap-2'>
                                                 <FaMapLocationDot className="w-4 h-4 text-primary-1" />
                                                 <p className='text-sm text-primary-1'>Edit Your Location</p>
@@ -80,41 +85,27 @@ const Seeker = () => {
                                                         <div className='absolute top-[120%] rounded p-2 bg-white w-full left-0 border border-black-2'>
                                                             <h1 className='mb-2'>PLACES</h1>
                                                             <ul className='text-lg font-light text-black-1'>
-                                                                <li>
-                                                                    <div className='flex items-center gap-2'>
-                                                                        <MdLocationPin className="w-3 h-3 text-primary-1" />
-                                                                        <p className='text-[14px] text-black-2 hover:text-black-1 transition-all cursor-pointer'>warri, dsc round-about</p>
-                                                                    </div>
-                                                                </li>
-                                                                <li>
-                                                                    <div className='flex items-center gap-2'>
-                                                                        <MdLocationPin className="w-3 h-3 text-primary-1" />
-                                                                        <p className='text-[14px] text-black-2 hover:text-black-1 transition-all cursor-pointer'>warri, Ebrumede secondary school</p>
-                                                                    </div>
-                                                                </li>
-                                                                <li>
-                                                                    <div className='flex items-center gap-2'>
-                                                                        <MdLocationPin className="w-3 h-3 text-primary-1" />
-                                                                        <p className='text-[14px] text-black-2 hover:text-black-1 transition-all cursor-pointer'>warri, Ugbomro, girls hostel. Delta state</p>
-                                                                    </div>
-                                                                </li>
-                                                                <li>
-                                                                    <div className='flex items-center gap-2'>
-                                                                        <MdLocationPin className="w-3 h-3 text-primary-1" />
-                                                                        <p className='text-[14px] text-black-2 hover:text-black-1 transition-all cursor-pointer'>warri, Ugbomro, federal university petroleum university</p>
-                                                                    </div>
-                                                                </li>
+                                                                {
+                                                                    ["warri, dsc round-about","warri, Ebrumede secondary school","warri, Ugbomro, girls hostel. Delta state", "warri, Ugbomro, federal university petroleum university"].map((address) => (
+                                                                            <li onClick={() => setCurrentLocation(address)}>
+                                                                                <DialogTrigger className='flex items-center gap-2'>
+                                                                                    <MdLocationPin className="w-3 h-3 text-primary-1" />
+                                                                                    <p className='text-[14px] text-black-2 hover:text-black-1 transition-all cursor-pointer'>{address}</p>
+                                                                                </DialogTrigger>
+                                                                            </li>
+                                                                    ))
+                                                                }
                                                             </ul>
                                                         </div>
                                                     }
                                                 </div>
-                                                <div  className='bg-[#ffffffc0] mt-6 px-4 py-1 rounded-md flex flex-col self-start hover:bg-white shadow-sm hover:shadow-md transition-all cursor-pointer w-full'>
+                                                <DialogTrigger onClick={handleSelectCurrentLocation}  className='bg-[#ffffffc0] mt-6 px-4 py-1 rounded-md flex flex-col self-start hover:bg-white shadow-sm hover:shadow-md transition-all cursor-pointer w-full'>
                                                         <div className='flex items-center gap-2 justify-center md:justify-start w-full'>
                                                             <FaMapLocationDot className="w-4 h-4 text-primary-1" />
                                                             <p className='text-sm text-primary-1'>Current Location</p>
                                                         </div>
-                                                        <p className='text-xs text-black-1 font-light'>Tap to select your current location</p>
-                                                </div>
+                                                        <p className='text-xs text-center md:text-start text-black-1 font-light w-full'>Tap to select your current location</p>
+                                                </DialogTrigger>
                                             </DialogDescription>
                                             </DialogHeader>
                                         </div>
