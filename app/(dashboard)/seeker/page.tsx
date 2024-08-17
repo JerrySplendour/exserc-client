@@ -16,7 +16,9 @@ import {
     DialogTrigger,
   } from "@/components/ui/dialog"
 import { MdLocationPin } from 'react-icons/md'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
+import Link from 'next/link'
+import { cn, Dashboardlinks } from '@/lib/utils'
   
 
   
@@ -30,6 +32,7 @@ const Seeker = () => {
   const [currentLocation, setCurrentLocation] = useState<string>("Uvwie, Warri")
 
   const router = useRouter()
+  const pathname = usePathname()
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value)
@@ -39,8 +42,6 @@ const Seeker = () => {
     setCurrentLocation("Effurun, PTI road Masojie")
   }
 
-  console.log(selected)
-
   const handleSubmit = () => {
     router.push("/seeker/" + selected.toLowerCase().replace(" ", "-"))
   }
@@ -49,7 +50,7 @@ const Seeker = () => {
     <div>
         <section className='seeker-bg-image h-[calc(100vh-200px)] md:h-[calc(100vh-85px)] w-full'>
             <div className='flex flex-col gap-y-6 items-center  self-start justify-center z-10 absolute top-0 left-0 h-full w-full'>
-                <div className='flex items-center justify-start gap-2 w-full h-full'>
+                <div className='flex items-center justify-between pr-3 gap-2 w-full h-full'>
                     {/* <Image alt={`location icon`} width={11} height={15} src={`/assets/images/icons/location.png`} />
                     <p className='capitalize text-white'>Current location:</p> */}
                     <Dialog>
@@ -107,6 +108,15 @@ const Seeker = () => {
                             </div>
                         </DialogContent>
                     </Dialog>
+                    <div className='self-start py-1 gap-6 hidden lg:flex'>
+                         {
+                        Dashboardlinks.map(({name, path}) => (
+                            <Link key={name} href={path} className={cn('text-white hover:text-primary-1 text-base font-medium', {
+                                "text-[#9A65CF]": path === pathname
+                            })} >{name}</Link>
+                        ))
+                    }
+                    </div>
                 </div>
                 <div className=' w-full max-w-[980px] flex flex-col gap-y-8 md:gap-y-20'>
                     <div>
