@@ -2,7 +2,7 @@ import { ListProps } from '@/types';
 import React, { FC } from 'react'
 import ListItem from './ListItem';
 
-const List: FC<ListProps> = ({items, setSelected}) => {
+const List: FC<ListProps> = ({items, setSelected, setOpen}) => {
 
   return (
     <ul
@@ -10,7 +10,7 @@ const List: FC<ListProps> = ({items, setSelected}) => {
     >
       {
           items.map((item) => (
-            <ListItem setSelected={setSelected} key={item.id} item={item} />
+            <ListItem setOpen={setOpen} setSelected={setSelected} key={item.id} item={item} />
           ))
       }
     </ul>

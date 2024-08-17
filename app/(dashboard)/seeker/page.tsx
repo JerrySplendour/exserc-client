@@ -16,6 +16,7 @@ import {
     DialogTrigger,
   } from "@/components/ui/dialog"
 import { MdLocationPin } from 'react-icons/md'
+import { useRouter } from 'next/navigation'
   
 
   
@@ -25,7 +26,10 @@ import { MdLocationPin } from 'react-icons/md'
 const Seeker = () => {
   
   const [searchText, setSearchText] = useState<string>("")
+  const [selected, setSelected] = useState<string>("")
   const [currentLocation, setCurrentLocation] = useState<string>("Uvwie, Warri")
+
+  const router = useRouter()
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value)
@@ -34,11 +38,76 @@ const Seeker = () => {
   const handleSelectCurrentLocation = () => {
     setCurrentLocation("Effurun, PTI road Masojie")
   }
+
+  console.log(selected)
+
+  const handleSubmit = () => {
+    router.push("/seeker/" + selected.toLowerCase().replace(" ", "-"))
+  }
       
   return (
     <div>
         <section className='seeker-bg-image h-[calc(100vh-200px)] md:h-[calc(100vh-85px)] w-full'>
-            <div className='flex flex-col gap-y-6 items-center justify-center z-10 absolute top-0 left-0 h-full w-full'>
+            <div className='flex flex-col gap-y-6 items-center  self-start justify-center z-10 absolute top-0 left-0 h-full w-full'>
+                <div className='flex items-center justify-start gap-2 w-full h-full'>
+                    {/* <Image alt={`location icon`} width={11} height={15} src={`/assets/images/icons/location.png`} />
+                    <p className='capitalize text-white'>Current location:</p> */}
+                    <Dialog>
+                        <DialogTrigger className="self-start">
+                            <div className='flex items-center gap-2 px-4 py-1 hover:shadow-md transition-all cursor-pointer'>
+                                <div className='flex items-center gap-2 p-1 px-2 rounded-sm'>
+                                    <FaMapLocationDot className="w-4 h-4 text-primary-1" />
+                                    <p className='text-sm text-primary-1'>Edit</p>
+                                </div>
+                                <p className='text-white'>|</p>
+                                <p className='text-sm text-start text-white max-w-48 truncate'>{currentLocation}</p>
+                            </div>
+                        </DialogTrigger>
+                        <DialogContent>
+                            <div className='sm:max-w-md'>
+                                <DialogHeader>
+                                <DialogTitle>
+                                    <div className='flex items-end gap-2'>
+                                        <MdLocationPin className="w-8 h-8 text-primary-1" />
+                                        <p className='text-xl text-primary-1 font-semibold'>Service Location</p>
+                                    </div>
+                                    <p className='text-black-1 text-base text-start mt-2'>Enter location of desired services</p>
+                                </DialogTitle>
+                                <DialogDescription>
+                                    <div className='relative'>
+                                        <Input value={searchText} onChange={handleChange} type='text' name='address' placeholder='Enter address' />
+                                        {
+                                            searchText.length > 1 &&
+                                            <div className='absolute top-[120%] rounded p-2 bg-white w-full left-0 border border-black-2'>
+                                                <h1 className='mb-2'>PLACES</h1>
+                                                <ul className='text-lg font-light text-black-1'>
+                                                    {
+                                                        ["warri, dsc round-about","warri, Ebrumede secondary school","warri, Ugbomro, girls hostel. Delta state", "warri, Ugbomro, federal university petroleum university"].map((address) => (
+                                                                <li key={address} onClick={() => setCurrentLocation(address)}>
+                                                                    <DialogTrigger className='flex items-center gap-2'>
+                                                                        <MdLocationPin className="w-3 h-3 text-primary-1" />
+                                                                        <p className='text-[14px] text-black-2 hover:text-black-1 transition-all cursor-pointer'>{address}</p>
+                                                                    </DialogTrigger>
+                                                                </li>
+                                                        ))
+                                                    }
+                                                </ul>
+                                            </div>
+                                        }
+                                    </div>
+                                    <DialogTrigger onClick={handleSelectCurrentLocation}  className='bg-[#ffffffc0] mt-6 px-4 py-1 rounded-md flex flex-col self-start hover:bg-white shadow-sm hover:shadow-md transition-all cursor-pointer w-full'>
+                                            <div className='flex items-center gap-2 justify-center md:justify-start w-full'>
+                                                <FaMapLocationDot className="w-4 h-4 text-primary-1" />
+                                                <p className='text-sm text-primary-1'>Current Location</p>
+                                            </div>
+                                            <p className='text-xs text-center md:text-start text-black-1 font-light w-full'>Tap to select your current location</p>
+                                    </DialogTrigger>
+                                </DialogDescription>
+                                </DialogHeader>
+                            </div>
+                        </DialogContent>
+                    </Dialog>
+                </div>
                 <div className=' w-full max-w-[980px] flex flex-col gap-y-8 md:gap-y-20'>
                     <div>
                         <h1 className='text-sm md:text-2xl xl:text-4xl text-center font-bold text-white'>LOOKING FOR SERVICE PROVIDERS <br  /> NEAR YOU?</h1>
@@ -54,63 +123,9 @@ const Seeker = () => {
                             <div className='flex flex-col items-center gap-y-4 bg-[#ffffff7b] p-4 lg:px-20 lg:py-6 rounded'>
                                 <h1 className='text-xl font-bold text-white'>Select service</h1>
                                 <div className='w-full flex flex-col lg:flex-row items-center gap-2'>
-                                    <DropdownSelect />
-                                    <Button size="lg" type='submit'>Search</Button>
+                                    <DropdownSelect selected={selected} setSelected={setSelected} />
+                                    <Button onClick={handleSubmit} size="lg" type='submit'>Search</Button>
                                 </div>
-                                <Dialog>
-                                    <DialogTrigger className="self-start w-full">
-                                        <div className='bg-[#ffffffc0] gap-0 self-start px-4 py-1 rounded hover:bg-white hover:shadow-md transition-all cursor-pointer w-full'>
-                                            <p className='text-sm text-start'>{currentLocation}</p>
-                                            <div className='flex items-center gap-2'>
-                                                <FaMapLocationDot className="w-4 h-4 text-primary-1" />
-                                                <p className='text-sm text-primary-1'>Edit Your Location</p>
-                                            </div>
-                                        </div>
-                                    </DialogTrigger>
-                                    <DialogContent>
-                                        <div className='sm:max-w-md'>
-                                            <DialogHeader>
-                                            <DialogTitle>
-                                                <div className='flex items-end gap-2'>
-                                                    <MdLocationPin className="w-8 h-8 text-primary-1" />
-                                                    <p className='text-xl text-primary-1 font-semibold'>Service Location</p>
-                                                </div>
-                                                <p className='text-black-1 text-base text-start mt-2'>Enter location of desired services</p>
-                                            </DialogTitle>
-                                            <DialogDescription>
-                                                <div className='relative'>
-                                                    <Input value={searchText} onChange={handleChange} type='text' name='address' placeholder='Enter address' />
-                                                    {
-                                                        searchText.length > 1 &&
-                                                        <div className='absolute top-[120%] rounded p-2 bg-white w-full left-0 border border-black-2'>
-                                                            <h1 className='mb-2'>PLACES</h1>
-                                                            <ul className='text-lg font-light text-black-1'>
-                                                                {
-                                                                    ["warri, dsc round-about","warri, Ebrumede secondary school","warri, Ugbomro, girls hostel. Delta state", "warri, Ugbomro, federal university petroleum university"].map((address) => (
-                                                                            <li key={address} onClick={() => setCurrentLocation(address)}>
-                                                                                <DialogTrigger className='flex items-center gap-2'>
-                                                                                    <MdLocationPin className="w-3 h-3 text-primary-1" />
-                                                                                    <p className='text-[14px] text-black-2 hover:text-black-1 transition-all cursor-pointer'>{address}</p>
-                                                                                </DialogTrigger>
-                                                                            </li>
-                                                                    ))
-                                                                }
-                                                            </ul>
-                                                        </div>
-                                                    }
-                                                </div>
-                                                <DialogTrigger onClick={handleSelectCurrentLocation}  className='bg-[#ffffffc0] mt-6 px-4 py-1 rounded-md flex flex-col self-start hover:bg-white shadow-sm hover:shadow-md transition-all cursor-pointer w-full'>
-                                                        <div className='flex items-center gap-2 justify-center md:justify-start w-full'>
-                                                            <FaMapLocationDot className="w-4 h-4 text-primary-1" />
-                                                            <p className='text-sm text-primary-1'>Current Location</p>
-                                                        </div>
-                                                        <p className='text-xs text-center md:text-start text-black-1 font-light w-full'>Tap to select your current location</p>
-                                                </DialogTrigger>
-                                            </DialogDescription>
-                                            </DialogHeader>
-                                        </div>
-                                    </DialogContent>
-                                </Dialog>
                             </div>
                         </div>
                     </div>

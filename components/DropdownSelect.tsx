@@ -1,12 +1,12 @@
 "use client"
 
-import React, { useEffect, useRef, useState } from 'react'
+import React, { FC, useEffect, useRef, useState } from 'react'
 import { TriangleDownIcon, TriangleUpIcon } from '@radix-ui/react-icons'
 import List from './List'
-import { TreeNode } from '@/types'
+import { DropdownProps, TreeNode } from '@/types'
 
-const DropdownSelect = () => {
-    const [selected, setSelected] = useState<string>("")
+const DropdownSelect: FC<DropdownProps> = ({selected, setSelected}) => {
+    
     const [open, setOpen] = useState<boolean>(false)
 
     const dropdownRef = useRef<HTMLDivElement | null>(null)
@@ -78,7 +78,7 @@ const DropdownSelect = () => {
         {
           open && (
               <div ref={dropdownRef}  className='p-2 bg-white rounded-md w-full h-fit absolute top-[115%] border-2 border-primary-1'>
-                  <List setSelected={setSelected} items={data} />
+                  <List setOpen={setOpen} setSelected={setSelected} items={data} />
               </div>
           )
         }

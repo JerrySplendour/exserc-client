@@ -27,3 +27,40 @@ export const links = [
         path: "#"
     }
 ]
+export const Dashboardlinks = [
+    {
+        name: "Dashboard",
+        path: '/seeker',
+        icon: "dashboard.png"
+    },
+    {
+        name: "Fund wallet",
+        path: "/user/wallet",
+        icon: "fund_wallet.png"
+    },
+    {
+        name: "My Jobs",
+        path: '/user/jobs',
+        icon: "my_jobs.png"
+    },
+    {
+        name: "Cards and Receipts",
+        path: "/user/cards-receipts",
+        icon: "cards_receipts.png"
+    },
+    {
+        name: "Transactions",
+        path: "/user/transaction",
+        icon: "transactions.png"
+    },
+    {
+        name: "Notifications",
+        path: "/user/notification",
+        icon: "notifications.png"
+    },
+    {
+        name: "Settings",
+        path: "/user/settings",
+        icon: "settings.png"
+    }
+]

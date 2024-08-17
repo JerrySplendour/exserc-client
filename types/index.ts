@@ -11,13 +11,20 @@ export interface TreeDropdownProps {
     data: TreeNode[];
 }
   
+export interface DropdownProps {
+    setSelected: Dispatch<SetStateAction<string>>;
+    selected: string;
+}
+  
 export interface ListProps {
     items: TreeNode[];
-    setSelected: Dispatch<SetStateAction<string>>
+    setSelected: Dispatch<SetStateAction<string>>;
+    setOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 export interface ListItemProps {
     item: TreeNode;
-    setSelected: Dispatch<SetStateAction<string>>
+    setSelected: Dispatch<SetStateAction<string>>;
+    setOpen: Dispatch<SetStateAction<boolean>>;
   }
   

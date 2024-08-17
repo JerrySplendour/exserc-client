@@ -4,6 +4,14 @@
 
   /* import the Dropdown Tree dependency styles */
 
+  .no-scrollbar::-webkit-scrollbar-thumb {
+      background: transparent;
+  }
+
+  .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+  }
 
   .wave-1-bg {
     background-image: url("../public/assets/images/wave-1.png");

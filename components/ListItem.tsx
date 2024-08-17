@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 import { TriangleDownIcon, TriangleRightIcon } from '@radix-ui/react-icons';
 
 
-const ListItem: FC<ListItemProps> = ({ item, setSelected }) => {
+const ListItem: FC<ListItemProps> = ({ item, setSelected, setOpen }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleOpen = () => {
@@ -21,7 +21,10 @@ const ListItem: FC<ListItemProps> = ({ item, setSelected }) => {
     }, [isOpen]);
 
     const handleSelectElement = () => {
-      if(!item.children?.length) setSelected(item.name);
+      if(!item.children?.length){
+        setSelected(item.name);
+        setOpen((val) => !val)
+      } 
       toggleOpen()
     }
 
@@ -40,7 +43,7 @@ const ListItem: FC<ListItemProps> = ({ item, setSelected }) => {
         className='transition-all overflow-auto ease-linear max-h-full'
         >
         {item.children && (
-          <List setSelected={setSelected} items={item.children} />
+          <List setOpen={setOpen} setSelected={setSelected} items={item.children} />
         )}
         </div>
     </li>
