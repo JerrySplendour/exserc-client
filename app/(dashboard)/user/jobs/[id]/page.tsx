@@ -23,7 +23,7 @@ const JobDetails = () => {
       <section className='flex flex-col gap-y-7'>
         <div className='flex flex-col lg:flex-row gap-x-20 gap-y-1 py-7'>
           <div className='flex flex-col gap-y-2 flex-1'>
-            <div className='text-lg flex items-end gap-1 font-semibold text-[#1A1D23]'><h3>Customer's name:</h3> <span className='font-normal text-black-1 text-base'>Kelvin Patrick</span></div>
+            <div className='text-lg flex items-end gap-1 font-semibold text-[#1A1D23]'><h3>Customer&apos;s name:</h3> <span className='font-normal text-black-1 text-base'>Kelvin Patrick</span></div>
             <div className='text-lg flex items-start gap-1 font-semibold text-[#1A1D23]'><h3>Address:</h3> <span className='font-normal text-black-1 text-base'>No 34, Alausa Street, Ekuigbo</span></div>
             <div className='text-lg flex items-end gap-1 font-semibold text-[#1A1D23]'><h3>Job Category:</h3> <span className='font-normal text-black-1 text-base'>Plumbing Services</span></div>
             <div className='text-lg flex items-end gap-1 font-semibold text-[#1A1D23]'><h3>Job Duration:</h3> <span className='font-normal text-black-1 text-base'>3 hours</span></div>

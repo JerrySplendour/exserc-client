@@ -15,7 +15,7 @@ const Category = ({ params }: { params: { category: string } }) => {
             <div className='flex flex-col gap-3'>
                 <p className='text-black-1 text-xl'>All Available Service</p>
                 <div className='flex items-center justify-between'>
-                    <p className='text-xl text-black-1'><span className='text-primary-1 capitalize'>{params?.category.replace("-", " ")}'s</span> near you</p>
+                    <p className='text-xl text-black-1'><span className='text-primary-1 capitalize'>{params?.category.replace("-", " ")}&apos;s</span> near you</p>
                     <Button onClick={() => router.back()} size="sm" type='button'>Back</Button>
                 </div>
             </div>
