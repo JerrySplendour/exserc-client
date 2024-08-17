@@ -22,7 +22,7 @@ const DNavbar = () => {
                 </figure>
             </div>
             <div className='flex gap-2 w-full justify-end lg:gap-32'>
-                <div className='items-center gap-12 hidden lg:flex w-full max-w-[500px]'>
+                <div className='items-center gap-12 hidden lg:flex w-full flex-1 xl:justify-center'>
                     {/* {
                         links.map(({name, path}) => (
                             <Link key={name} href={path} className={cn('text-[#3C3742] text-[17px] font-medium', {
@@ -30,7 +30,7 @@ const DNavbar = () => {
                             })} >{name}</Link>
                         ))
                     } */}
-                    <Input name='search' placeholder='search feature, settings and more' className='px-10' />
+                    <Input name='search' placeholder='search feature, settings and more' className='px-10 max-w-[500px]' />
                 </div>
                 <div className='flex items-center gap-6'>
                     <div>
