@@ -9,7 +9,7 @@ type BookServiceType = ButtonProps
 
 const BookService = (props: BookServiceType ) => {
   return (
-    <div className='w-full max-w-[400px] mt-4'>
+    <div className='w-full max-w-[400px]'>
                 <Dialog>
                     <DialogTrigger asChild>
                     <Button {...props} >Book Service</Button>

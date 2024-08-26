@@ -45,7 +45,7 @@ const Category = ({ params }: { params: { category: string } }) => {
                             Profile
                         </Link>
                     </Button>
-                    <BookService size="rs" className='rounded-2xl border'  />
+                    <BookService size="rs" className='rounded-2xl border mt-0'  />
                 </div>
             </div>
         </section>
