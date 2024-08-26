@@ -48,7 +48,7 @@ const Seeker = () => {
       
   return (
     <div>
-        <section className='seeker-bg-image h-[calc(100vh-200px)] md:h-[calc(100vh-85px)] w-full'>
+        <section className='seeker-bg-image h-[calc(100vh-200px)] md:h-[calc(100vh-85px)] w-full no-scrollbar'>
             <div className='flex flex-col gap-y-6 items-center  self-start justify-center z-10 absolute top-0 left-0 h-full w-full'>
                 <div className='flex items-center justify-between pr-3 gap-2 w-full h-full'>
                     {/* <Image alt={`location icon`} width={11} height={15} src={`/assets/images/icons/location.png`} />

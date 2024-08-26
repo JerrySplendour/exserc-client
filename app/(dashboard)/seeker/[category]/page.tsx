@@ -1,5 +1,6 @@
 "use client"
 
+import BookService from '@/components/BookService'
 import { Button } from '@/components/ui/button'
 import { StarFilledIcon, StarIcon } from '@radix-ui/react-icons'
 import Image from 'next/image'
@@ -44,7 +45,7 @@ const Category = ({ params }: { params: { category: string } }) => {
                             Profile
                         </Link>
                     </Button>
-                    <Button size="rs" className='rounded-2xl border' variant="outline">Book service</Button>
+                    <BookService size="rs" className='rounded-2xl border'  />
                 </div>
             </div>
         </section>

@@ -20,7 +20,7 @@ export default function RootLayout({
           <DNavbar />
           <DMenubar />
         </Sheet>
-        <div className="h-[calc(100vh-62px)] overflow-y-auto lg:h-[calc(100vh-74px)] no-scrollbar">
+        <div className="h-[calc(100vh-62px)] overflow-y-auto lg:h-[calc(100vh-85px)] no-scrollbar">
           {children}
           <Footer />
         </div>
