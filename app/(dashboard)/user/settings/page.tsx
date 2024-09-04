@@ -6,7 +6,6 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { CameraIcon } from '@radix-ui/react-icons';
 import Image from 'next/image';
 import Link from 'next/link'
 import React, { ChangeEvent, useEffect, useState } from 'react'
@@ -100,21 +99,21 @@ const Settings = () => {
     
 
   return (
-    <div className='px-3 md:px-10'>
+    <div className='px-2 md:px-10'>
         <section className='py-4'>
             <div className='flex flex-col gap-3'>
                 <p className='text-black-1 text-xl lg:text-2xl'>Account Settings</p>
             </div>
         </section>
-        <section className='flex items-start gap-10 py-4'>
-            <div className='flex flex-col rounded-2xl border-2 overflow-hidden py-3 w-full max-w-[270px] shadow-xl'>
-                <Link href="/settings" className='p-3 px-4 bg-[#9A65CF4D] text-primary-1 font-medium text-xl'>
+        <section className='flex flex-col xl:flex-row items-start gap-6 xl:gap-10 py-4'>
+            <div className='flex flex-row xl:flex-col justify-between rounded-lg xl:rounded-2xl xl:border-2 overflow-hidden w-full max-w-[400px] xl:max-w-[270px] shadow-md xl:shadow-xl'>
+                <Link href="/settings" className='p-2 xl:p-3 px-4 bg-[#9A65CF4D] text-primary-1 font-medium text-base xl:text-xl'>
                     <span>Profile settings</span>
                 </Link>
-                <Link href="/password" className='p-3 px-4 bg-[#fff] text-primary-1 font-medium text-xl'>
+                <Link href="/password" className='p-2 lg:p-3 px-4 bg-[#fff] text-primary-1 flex-1 text-center xl:text-start font-medium text-base xl:text-xl'>
                     <span>Password</span>
                 </Link>
-                <Link href="/notifications" className='p-3 px-4 bg-[#fff] text-primary-1 font-medium text-xl'>
+                <Link href="/notifications" className='p-2 lg:p-3 px-4 bg-[#fff] text-primary-1 font-medium text-base xl:text-xl'>
                     <span>Notifications</span>
                 </Link>
             </div>
@@ -130,7 +129,7 @@ const Settings = () => {
                             <Image src={`${profileSrc}`} className='w-auto h-auto rounded-full object-cover z-10 absolute top-0 left-0' width={200} height={200} alt='profile image' />
                             }
                             <label htmlFor="fileInput">
-                            <BiCamera  className='text-white w-10 h-10 cursor-pointer bg-primary-1 border-[6px] border-white absolute rounded-full p-1 bottom-0 right-[7px] z-20' />
+                            <BiCamera  className='text-white w-9 h-9 xl:w-10 xl:h-10 cursor-pointer bg-primary-1 border-[6px] border-white absolute rounded-full p-1 -right-2 bottom-0 xl:right-0 z-20' />
                             </label>
                         </div>
                         <input id='fileInput' hidden type="file" onChange={handleProfile} className='absolute rounded-full p-1 bottom-2 -right-full z-30' name="profile_pic"></input>
@@ -139,7 +138,7 @@ const Settings = () => {
                 </div>
 
                 {/* inputs begings */}
-                <div className='flex items-start flex-col lg:flex-row gap-10'>
+                <div className='flex items-start flex-col md:flex-row gap-10'>
                     <div className="flex flex-col gap-y-5 w-full sm:max-w-[482px]">
                         <div>
                             <FormField
