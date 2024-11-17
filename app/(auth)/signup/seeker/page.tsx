@@ -16,28 +16,42 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import Link from 'next/link';
+import {useRouter} from 'next/navigation'
 
 const Seeker = () => {
 
   const [profileSrc, setProfileSrc] = useState<string>('');
+  const router = useRouter()
 
-  const formSchema = z.object({
-    fullname: z.string().min(2, { message: "Full name is required" }).max(50, { message: "Full name cannot exceed 100 characters" }),
-    email: z.string().email({message: "Invalid email address"}),
-    password: z.string().min(8, { message: "Password must be at least 8 characters long" })
-    .max(50, { message: "Password cannot exceed 50 characters" })
-    .regex(/[a-z]/, { message: "Password must contain at least one lowercase letter" })
-    .regex(/[A-Z]/, { message: "Password must contain at least one uppercase letter" })
-    .regex(/[0-9]/, { message: "Password must contain at least one number" })
-    .regex(/[@$!%*?&]/, { message: "Password must contain at least one special character" })
+  const formSchema = z
+  .object({
+    username: z
+      .string()
+      .min(2, { message: "username is required" })
+      .max(50, { message: "username cannot exceed 50 characters" }),
+    email: z.string().email({ message: "Invalid email address" }),
+    password: z
+      .string()
+      .min(8, { message: "Password must be at least 8 characters long" })
+      .max(50, { message: "Password cannot exceed 50 characters" })
+      .regex(/[a-z]/, { message: "Password must contain at least one lowercase letter" })
+      .regex(/[A-Z]/, { message: "Password must contain at least one uppercase letter" })
+      .regex(/[0-9]/, { message: "Password must contain at least one number" })
+      .regex(/[@$!%*?&]/, { message: "Password must contain at least one special character" }),
+    confirmPassword: z.string(),
   })
+  .refine((data) => data.password === data.confirmPassword, {
+    path: ["confirmPassword"], // Target the confirmPassword field
+    message: "Passwords must match",
+  });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      fullname: "",
+      username: "",
       email: "",
-      password: ""
+      password: "",
+      confirmPassword: ""
     },
   })
 
@@ -52,7 +66,8 @@ const Seeker = () => {
   }
 
   const onSubmit = () => {
-    console.log('submitted...........')
+    alert("Registration successful, Enter OK setup profile")
+    router.push("./seeker/profile")
   }
 
   return (
@@ -60,7 +75,7 @@ const Seeker = () => {
       <Form {...form}>
         <form className='flex items-center flex-col gap-y-9 w-full max-w-[1024px] px-4' onSubmit={form.handleSubmit(onSubmit)}>
           <div className='flex flex-col w-full items-center'>
-            <div className='relative mb-4'>
+            {/* <div className='relative mb-4'>
               <div className='w-[100px] h-[100px] xl:w-[130px] xl:h-[130px] border-[2px] border-primary-1 rounded-full relative flex items-center justify-center bg-[#F8F7F7]'>
                 <Image src="/assets/images/profile.svg" alt='profile' className='z-0' width={43} height={48} />
                 {
@@ -72,7 +87,7 @@ const Seeker = () => {
                 </label>
               </div>
               <input id='fileInput' hidden type="file" onChange={handleProfile} className='absolute rounded-full p-1 bottom-2 -right-full z-30' name="profile_pic"></input>
-            </div>
+            </div> */}
             <h1 className='font-normal text-2xl sm:text-3xl text-center text-black-1'>Register</h1>
             <h3 className='text-primary-1 font-normal text-xs sm:text-xl text-center mt-1'>To find a service</h3>
           </div>
@@ -80,11 +95,11 @@ const Seeker = () => {
             <div>
               <FormField
                 control={form.control}
-                name="fullname"
+                name="username"
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <Input placeholder="Full name" {...field} />
+                      <Input placeholder="Username" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -113,6 +128,20 @@ const Seeker = () => {
                   <FormItem>
                     <FormControl>
                       <Input placeholder="Password" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div>
+              <FormField
+                control={form.control}
+                name="confirmPassword"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input placeholder="Confirm Password" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
