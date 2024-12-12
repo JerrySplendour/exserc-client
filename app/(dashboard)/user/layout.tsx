@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Sheet } from "@/components/ui/sheet";
+import { Sheet, SheetClose } from "@/components/ui/sheet";
 import DNavbar from "@/components/dashboard/DNavbar";
 import DMenubar from "@/components/dashboard/DMenubar";
 import DSidebar from "@/components/dashboard/DSidebar";
