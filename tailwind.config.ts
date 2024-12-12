@@ -42,6 +42,9 @@ const config = {
         "slidedown": "slidedown 0.8s ease-in-out",
         "slideup": "slideup 0.8s ease-in-out"
       },
+      transitionDuration: {
+        '1500': '1500ms'
+      },
       colors: {
         primary: {
           1: "#9A65CF"
