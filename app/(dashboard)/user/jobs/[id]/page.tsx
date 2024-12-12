@@ -14,7 +14,7 @@ const JobDetails = () => {
     <div className='px-3 md:px-20 py-10 md:py-28 max-w-[1000px] m-auto'>
       <section className='flex items-center gap-4 md:gap-14'>
         <div className='w-[268px] h-[256px] rounded-3xl object-cover overflow-hidden'>
-          <Image src="/assets/images/big-profile_pic.jfif" className='w-full h-full block object-cover' width={266} height={258} alt='profile pic' />
+          <Image src="/assets/images/big-profile_pic.png" className='w-full h-full block object-cover' width={266} height={258} alt='profile pic' />
         </div>
         <div className='w-[100px] md:w-[236px] min-h-[168px]'>
           <Image src="/assets/images/icons/complete.png" className='w-full h-full block object-cover' width={236} height={168} alt='complete' />

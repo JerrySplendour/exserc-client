@@ -14,7 +14,7 @@ const Chat = () => {
                     {/* recieved messages */}
                     <div className='px-6 lg:px-10 xl:px-16 my-2 gap-1 flex items-center justify-start'>
                             <figure className='w-[28px] h-[28px] rounded-full overflow-hidden border border-primary-1'>
-                                <Image src='/assets/images/big-profile_pic.jfif' className='w-full h-full object-cover' alt='logo' width={128} height={128} />
+                                <Image src='/assets/images/big-profile_pic.png' className='w-full h-full object-cover' alt='logo' width={128} height={128} />
                             </figure>
                         <div className='flex relative items-end flex-col max-w-[70%] mt-6 text-black-2  rounded-lg'>
                             <div className='flex items-start flex-col bg-[#f0f0f0] z-10 rounded-tr-2xl rounded-b-2xl p-[6px] xl:p-2'>

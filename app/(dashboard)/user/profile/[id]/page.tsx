@@ -17,7 +17,7 @@ const page = () => {
     <div className='py-8 px-6'>
         <section className='flex items-center justify-center flex-col gap-y-3'>
             <div className='w-[200px] h-[190px] border-[2px] border-primary-1 rounded-md relative flex items-center justify-center bg-[#F8F7F7] object-cover'>
-                <Image src="/assets/images/bg-profile_pic.jfif" alt='profile' className='z-0 block h-full w-full object-cover' width={200} height={200} />
+                <Image src="/assets/images/big-profile_pic.png" alt='profile' className='z-0 block h-full w-full object-cover' width={200} height={200} />
             </div>
             <div>
                 <h1 className="font-medium text-4xl text-black-1 relative">Kelvin Patrick <span className='text-[#2F9C26] text-sm absolute top-1/3 -right-12'>Online</span></h1>
@@ -87,7 +87,7 @@ const page = () => {
                             <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
                                 <div className="p-1">
                                     <div className='rounded-2xl overflow-hidden'>
-                                        <Image src="/assets/images/work-photos-1.jfif" alt='profile' className='z-0 block h-full w-full object-cover' width={247} height={247} />
+                                        <Image src="/assets/images/work-photos-1.png" alt='profile' className='z-0 block h-full w-full object-cover' width={247} height={247} />
                                     </div>
                                 </div>
                             </CarouselItem>

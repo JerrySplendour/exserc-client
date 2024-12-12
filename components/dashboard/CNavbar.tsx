@@ -13,7 +13,7 @@ const CNavbar = () => {
         <div className='flex items-center justify-between lg:gap-20 shadow-sm w-full py-2 px-2 xl:px-6 border-b-[0.15em] border-[rgba(0,0,0,0.11)] '>
             <div className='flex items-center w-full justify-start gap-2'>
                 <figure className='w-[45px] h-[45px] rounded-full overflow-hidden border border-primary-1'>
-                    <Image src='/assets/images/big-profile_pic.jfif' className='w-full h-full object-cover' alt='logo' width={128} height={128} />
+                    <Image src='/assets/images/big-profile_pic.png' className='w-full h-full object-cover' alt='logo' width={128} height={128} />
                 </figure>
                 <div className='flex flex-1 flex-col'>
                     <p className='text-black-1 text-sm lg:text-base'>Kelvin Patrick</p>

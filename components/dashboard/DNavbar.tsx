@@ -40,7 +40,7 @@ const DNavbar = () => {
                     </div>
                     <div>
                         <figure className='w-[28px] h-[28px] rounded-full overflow-hidden border border-primary-1'>
-                            <Image src='/assets/images/big-profile_pic.jfif' className='w-full h-full object-cover' alt='logo' width={128} height={128} />
+                            <Image src='/assets/images/big-profile_pic.png' className='w-full h-full object-cover' alt='logo' width={128} height={128} />
                         </figure>
                     </div>
                     <div>       
