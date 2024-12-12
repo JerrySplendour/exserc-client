@@ -44,8 +44,8 @@ export const Dashboardlinks = [
         icon: "my_jobs.png"
     },
     {
-        name: "Cards and Receipts",
-        path: "/user/cards-receipts",
+        name: "subscription",
+        path: "/user/subscription",
         icon: "cards_receipts.png"
     },
     {
