@@ -6,7 +6,7 @@ import Menubar from "@/components/Menubar";
 
 
 export const metadata: Metadata = {
-  title: "Premscent - Home",
+  title: "Exserc - Home",
   description: "Search and hire service workers",
 };
 

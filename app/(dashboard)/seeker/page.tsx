@@ -56,7 +56,7 @@ const Seeker = () => {
                     <Dialog>
                         <DialogTrigger className="self-start">
                             <div className='flex items-center gap-2 px-4 py-1 hover:shadow-md transition-all cursor-pointer'>
-                                <div className='flex items-center gap-2 p-1 px-2 rounded-sm'>
+                                <div className='flex items-center gap-2 p-1 px-2 rounded-sm bg-white'>
                                     <FaMapLocationDot className="w-4 h-4 text-primary-1" />
                                     <p className='text-sm text-primary-1'>Edit</p>
                                 </div>
@@ -108,11 +108,11 @@ const Seeker = () => {
                             </div>
                         </DialogContent>
                     </Dialog>
-                    <div className='self-start py-1 gap-6 hidden lg:flex'>
+                    <div className='self-start py-1 gap-4 hidden lg:flex'>
                          {
                         Dashboardlinks.map(({name, path}) => (
-                            <Link key={name} href={path} className={cn('text-white hover:text-primary-1 text-base font-medium', {
-                                "text-[#9A65CF]": path === pathname
+                            <Link key={name} href={path} className={cn('text-white px-2 rounded-sm hover:text-primary-1 text-base font-medium', {
+                                "text-white": path === pathname
                             })} >{name}</Link>
                         ))
                     }

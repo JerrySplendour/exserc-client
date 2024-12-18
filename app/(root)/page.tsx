@@ -123,7 +123,7 @@ export default function Home() {
                 className="object-contain object-top w-full h-full block"
               />
           </figure>
-          <figure className="w-[30px] lg:w-[35px] xl:w-[50px] absolute top-0 left-0 z-0">
+          {/* <figure className="w-[30px] lg:w-[35px] xl:w-[50px] absolute top-0 left-0 z-0">
               <Image
                 src="/assets/images/premscent.png"
                 alt="premscent"
@@ -131,12 +131,12 @@ export default function Home() {
                 height={15}
                 className="w-full object-contain block"
               />
-          </figure>
+          </figure> */}
         </div>
         <div className="flex flex-col items-start justify-center gap-y-4 xl:gap-y-6 pt-12 lg:pt-20">
           <div className="flex items-center gap-3">
             <span className="block w-14 h-[2px] bg-primary-1 rounded-full"></span>
-            <h1 className="text-xl text-primary-1">About Premscent</h1>
+            <h1 className="text-xl text-primary-1">About Exserc</h1>
           </div>
           <h2 className="font-bold text-2xl xl:text-[50px] text-black-1 xl:leading-[58px]">Get your needs sorted <br /> out from your place of <br /> comfort</h2>
           <p className="text-start text-[13px] leading-[17px] xl:text-xl text-black-2 max-w-80 xl:max-w-[450px]">Lorem ipsum dolor sit amet,consectetur
@@ -164,7 +164,7 @@ export default function Home() {
           <div className="flex flex-col items-center lg:items-start justify-center gap-y-6 pt-8 lg:pt-20">
             <div className="flex items-center gap-3">
               <span className="block w-14 h-[2px] bg-primary-1 rounded-full"></span>
-              <h1 className="text-xl text-primary-1">About Premscent</h1>
+              <h1 className="text-xl text-primary-1">About Exserc</h1>
             </div>
             <h2 className="font-bold text-center lg:text-start text-2xl xl:text-[40px] text-black-1 xl:leading-[48px]">We Provide Exclusive <br /> Marketing Service</h2>
             <div className="flex flex-col items-start gap-y-16 mt-8">
@@ -361,7 +361,7 @@ export default function Home() {
                 className="object-cover block"
               />
             </figure>
-            <div className="bg-[rgba(154,101,207,0.35)] text-xs text-white flex items-center justify-center absolute top-0 left-0 w-full h-full">
+            <div className="bg-[#225f6a51] text-xs text-white flex items-center justify-center absolute top-0 left-0 w-full h-full">
               <p className="text-center">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ducimus rerum provident sit sed!</p>
             </div>
           </div>

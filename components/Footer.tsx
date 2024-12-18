@@ -71,7 +71,7 @@ const Footer = () => {
             </div>
         <div className="pt-8 flex items-center justify-center border-t-[1px] border-[#ffffff42] w-[98%]">
             <aside>
-                <p className='text-sm md:text-base'>{`Copyright © ${new Date().getFullYear()} - All right reserved by PremScent`}</p>
+                <p className='text-sm md:text-base'>{`Copyright © ${new Date().getFullYear()} - All right reserved by Exserc`}</p>
             </aside>
         </div>
     </footer>

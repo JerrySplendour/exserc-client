@@ -8,7 +8,6 @@ import { usePathname } from 'next/navigation'
 import { cn, links } from '@/lib/utils'
 import { HamburgerMenuIcon } from '@radix-ui/react-icons'
 import { SheetTrigger } from './ui/sheet'
-import { FaMapLocationDot } from 'react-icons/fa6'
 
 
 
@@ -27,7 +26,7 @@ const Navbar = () => {
                     {
                         links.map(({name, path}) => (
                             <Link key={name} href={path} className={cn('text-[#3C3742] text-[17px] font-medium', {
-                                "text-[#9A65CF]": path === pathname
+                                "text-primary-1": path === pathname
                             })} >{name}</Link>
                         ))
                     }

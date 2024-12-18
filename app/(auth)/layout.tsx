@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "../globals.css";
 
 export const metadata: Metadata = {
-  title: "Premscent - Login | Register",
+  title: "Exserc - Login | Register",
   description: "user login and registration page",
 };
 

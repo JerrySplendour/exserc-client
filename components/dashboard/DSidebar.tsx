@@ -23,7 +23,7 @@ const DSidebar = () => {
                         {
                             Dashboardlinks.map(({name, path, icon}) => (
                                 <Link key={name} href={path} className={cn('text-[#3C3742] px-3 py-4 w-full flex justify-start gap-x-2 text-[20px] font-normal', {
-                                    "font-medium bg-[#9A65CF4D]": path === pathname
+                                    "font-medium bg-primary-2": path === pathname
                                 })} >
                                     <div className='w-5 h-5 flex items-center justify-center pt-3'>
                                         <Image alt={`${icon} icon`} className='object-cover w-auto h-auto' priority width={18} height={18} src={`/assets/images/icons/${icon}`} />

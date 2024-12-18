@@ -47,7 +47,8 @@ const config = {
       },
       colors: {
         primary: {
-          1: "#9A65CF"
+          1: "#225F6A",
+          2: "rgba(34, 95, 106, 0.3)"
         },
         black: {
           1: "#3C3742",
