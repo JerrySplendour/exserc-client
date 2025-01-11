@@ -29,9 +29,19 @@ export const links = [
 ]
 export const Dashboardlinks = [
     {
-        name: "Dashboard",
+        name: "Home",
         path: '/seeker',
         icon: "dashboard.png"
+    },
+    {
+        name: "Find service",
+        path: '#',
+        icon: "search.png"
+    },
+    {
+        name: "Profile",
+        path: '#',
+        icon: "profile.png"
     },
     {
         name: "Fund wallet",

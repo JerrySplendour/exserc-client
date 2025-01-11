@@ -10,6 +10,8 @@ import {
 } from "@/components/ui/carousel"
 import { StarFilledIcon, StarIcon } from '@radix-ui/react-icons'
 import BookService from '@/components/BookService'
+import { Button } from '@/components/ui/button'
+import Link from 'next/link'
 
 
 const page = () => {
@@ -44,7 +46,7 @@ const page = () => {
                     <p className='text-xl sm:text-2xl font-medium text-black-1'>3.5/5</p>
                 </div> 
             </div>
-                <BookService variant="default" size="lg" className='rounded-full w-full text-lg font-normal p-5 mt-4' />
+                <Button type='button' variant="default" size="rs" className='rounded-full max-w-80 w-full'><Link href="/user/chat">Message</Link></Button>
             <div className='py-3 xl:py-6 border border-primary-1 rounded-3xl grid grid-cols-1 sm:grid-cols-3 items-start mt-4 w-full'>
                 <div className='flex flex-col gap-2 items-center justify-start border-b sm:border-b-0 sm:border-r-[2px] h-full py-3 border-primary-1'>
                     <p className='text-lg font-medium text-primary-1'>Skills</p>
