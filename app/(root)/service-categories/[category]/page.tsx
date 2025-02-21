@@ -26,7 +26,7 @@ const Category = ({ params }: { params: { category: string } }) => {
                 <div className='w-[90px]  md:w-[124px] md:h-[92px] object-cover'>
                     <Image src="/assets/images/profile_pic.png" className='w-full h-full block object-cover' width={124} height={92} alt='profile pic' />
                 </div>
-                <Link href={`/seeker/${params.category}/ewewefwrfrrww`}  className='flex flex-1 flex-col gap-x-1'>
+                <Link href={`/service-providers/userid`}  className='flex flex-1 flex-col gap-x-1'>
                     <div className='flex flex-wrap items-center gap-x-2'><p className='font-medium text-black-1 text-base md:text-2xl'>Kelvin Patrick</p><span className='font-normal text-xs md:text-sm text-black-2'>5km away</span></div>
                     <div className='flex items-center text-black-2 font-semibold text-xs md:text-xl'>
                         <span>Rating: </span>
@@ -41,7 +41,7 @@ const Category = ({ params }: { params: { category: string } }) => {
                 </Link>
                 <div className='flex items-center gap-3'>
                     <Button size="rs" className='rounded-2xl border hidden md:flex' variant="outline">   
-                        <Link href={`/seeker/${params.category}/ewewefwrfrrww`}>
+                        <Link href={`/service-providers/userid`}>
                             Profile
                         </Link>
                     </Button>

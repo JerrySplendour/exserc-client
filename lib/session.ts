@@ -1,0 +1,36 @@
+'use server'
+
+import { cookies } from 'next/headers'
+import { SessionPayload } from './definitions'
+ 
+export async function createSession(payload: SessionPayload) {
+  const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+ 
+  // 3. Store the session in cookies for optimistic auth checks
+  const cookieStore = await cookies()
+  cookieStore.set('Exserc-session', JSON.stringify(payload), {
+    httpOnly: true,
+    secure: true,
+    expires: expiresAt,
+    sameSite: 'lax',
+    path: '/',
+  })
+}
+
+export async function getSession() {
+  const cookieStore = await cookies()
+  const session = cookieStore.get('Exserc-session')
+  if (!session) return null
+  return JSON.parse(session?.value) as SessionPayload
+}
+
+export async function updateSession(payload: Partial<SessionPayload>) {
+  const session = await getSession()
+  if (!session) return
+  createSession({ ...session, ...payload })
+}
+
+export async function deleteSession() {
+  const cookieStore = await cookies()
+  cookieStore.delete('Exserc-session')
+}

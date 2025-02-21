@@ -8,6 +8,10 @@ import { useEffect } from "react";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import Link from "next/link";
+import Footer from "@/components/Footer";
+import { Sheet } from "@/components/ui/sheet";
+import Navbar from "@/components/Navbar";
+import Menubar from "@/components/Menubar";
 
 export default function Home() {
 
@@ -17,6 +21,10 @@ export default function Home() {
 
   return (
     <main>
+      <Sheet>
+        <Navbar />
+        <Menubar />
+      </Sheet>
       <section className="flex w-full items-center xl:justify-between justify-center gap-2 px-[25px] xl:max-w-[1100px] m-auto my-12 xl:my-0">
         <div className="flex items-center justify-center lg:items-end lg:justify-end">
             <div className="flex gap-y-3 flex-col">
@@ -367,6 +375,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <Footer />
     </main>
   );
 }

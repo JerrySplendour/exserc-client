@@ -43,7 +43,7 @@ const Seeker = () => {
   }
 
   const handleSubmit = () => {
-    router.push("/seeker/" + selected.toLowerCase().replace(" ", "-"))
+    router.push("/service-categories/" + selected.toLowerCase().replace(" ", "-"))
   }
       
   return (
@@ -51,11 +51,11 @@ const Seeker = () => {
         <section className='seeker-bg-image h-[calc(100vh-200px)] md:h-[calc(100vh-85px)] w-full no-scrollbar'>
             <div className='flex flex-col gap-y-6 items-center  self-start justify-center z-10 absolute top-0 left-0 h-full w-full'>
                 <div className='flex items-center justify-between pr-3 gap-2 w-full h-full'>
-                    {/* <Image alt={`location icon`} width={11} height={15} src={`/assets/images/icons/location.png`} />
+                    {/* <Image alt={`location icon`} width={11} height={15} src={`/assets/images/icon ]s/location.png`} />
                     <p className='capitalize text-white'>Current location:</p> */}
                     <Dialog>
                         <DialogTrigger className="self-start">
-                            <div className='flex items-center gap-2 px-4 py-1 hover:shadow-md transition-all cursor-pointer'>
+                            <div className='flex items-center gap-2 px-4 py-2 hover:shadow-md transition-all cursor-pointer'>
                                 <div className='flex items-center gap-2 p-1 px-2 rounded-sm bg-white'>
                                     <FaMapLocationDot className="w-4 h-4 text-primary-1" />
                                     <p className='text-sm text-primary-1'>Edit</p>
@@ -108,10 +108,10 @@ const Seeker = () => {
                             </div>
                         </DialogContent>
                     </Dialog>
-                    <div className='self-start py-1 gap-4 hidden lg:flex'>
+                    <div className='self-start py-1 gap-1 xl:gap-4 hidden lg:flex'>
                          {
                         Dashboardlinks.map(({name, path}) => (
-                            <Link key={name} href={path} className={cn('text-white px-2 rounded-sm hover:text-primary-1 text-base font-medium', {
+                            <Link key={name} href={path} className={cn('text-white px-2 rounded-sm hover:text-primary-1 text-sm xl:text-base font-medium', {
                                 "text-white": path === pathname
                             })} >{name}</Link>
                         ))

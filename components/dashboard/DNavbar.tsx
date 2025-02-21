@@ -18,7 +18,7 @@ const DNavbar = () => {
     !pathname?.includes('chat') && 
     <div className='flex items-center justify-center w-full z-10'>
         <div className='flex items-center justify-between gap-4 lg:gap-20 shadow-sm w-full py-4 px-4 xl:px-6 border-b-[0.15em] border-[rgba(0,0,0,0.11)] '>
-            <div className={cn('flex items-center gap-6 lg:hidden', {'lg:flex': pathname.includes('seeker')})}> 
+            <div className={cn('flex items-center gap-6 lg:hidden', {'lg:flex': pathname.includes('find-service-providers')})}> 
                 <figure className='min-w-[100px]'>
                     <Image src='/assets/images/logo-1.png' className='block w-auto h-auto object-cover' alt='logo' width={130} height={30} />
                 </figure>

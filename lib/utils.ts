@@ -30,7 +30,7 @@ export const links = [
 export const Dashboardlinks = [
     {
         name: "Home",
-        path: '/seeker',
+        path: '/find-service-providers',
         icon: "dashboard.png"
     },
     {

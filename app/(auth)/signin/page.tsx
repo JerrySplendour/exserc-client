@@ -1,6 +1,6 @@
 "use client"
 
-import React from 'react'
+import React, { useState } from 'react'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -15,9 +15,15 @@ import {
 import { Input } from "@/components/ui/input"
 import Link from 'next/link';
 import Image from 'next/image'
+import { login } from '@/actions/auth'
+import { useToast } from '@/hooks/use-toast'
+import { useRouter } from 'next/navigation'
 
 const SignIn = () => {
-
+  const [buttonStatus, setButtonStatus] = useState<boolean>(false)
+  
+  const router = useRouter()
+  const { toast } = useToast()
   const formSchema = z.object({
     email: z.string().email({message: "Invalid email address"}),
     password: z.string().min(8, { message: "Password must be at least 8 characters long" })
@@ -36,8 +42,26 @@ const SignIn = () => {
     },
   })
 
-  const onSubmit = () => {
-    console.log('submitted...........')
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    const formData = new FormData()
+    formData.set("email", values.email)
+    formData.set("password", values.password)
+    setButtonStatus(val => !val)
+    const res = await login(formData)
+    if(res?.username){
+      toast({
+        title: "Success ✅",
+        description: `Welcome ${res.username}!`,
+      })
+      router.push('/find-service-providers')
+    }else{
+      toast({
+        title: "Error",
+        variant: 'destructive',
+        description: res.message,
+      })
+    }
+    setButtonStatus(val => !val)
   }
 
   return (
@@ -48,7 +72,7 @@ const SignIn = () => {
             <div>
               <Link href="/">
                 <div className='w-12 h-12 rounded-md overflow-hidden'>
-                  <Image src='/assets/images/pp.png' className='block w-full h-full object-cover' alt='logo' width={50} height={50} />
+                  <Image src='/assets/images/favicon.png' className='block w-full h-full object-cover' alt='logo' width={50} height={50} />
                 </div>
               </Link>
             </div>
@@ -76,7 +100,7 @@ const SignIn = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <Input placeholder="Password" {...field} />
+                      <Input type='password' placeholder="Password" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -87,7 +111,9 @@ const SignIn = () => {
           </div>
           <div className='mt-4 flex flex-col gap-y-4 w-full max-w-[482px] items-center'>
             <p className='text-black-2 font-medium text-[10px] sm:text-sm'>By Signing up, you agree to our <Link href="#"  className="text-[#3FBFA9]">Term & Conditions</Link> and <Link href="#"  className="text-[#3FBFA9]">Privacy Policy</Link></p>
-            <Button variant="default" className='w-full' type="submit">Login</Button>
+            <Button variant="default" className='w-full' type="submit" disabled={buttonStatus}>
+              {buttonStatus ? 'Loading...' : 'Login'}
+            </Button>
             <p className='text-black-2 font-medium text-[10px] sm:text-sm'>Don&rsquo;t have an account? <Link href="/signup" className="text-primary-1">Register</Link></p>
           </div>
 
