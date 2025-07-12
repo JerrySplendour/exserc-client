@@ -3,8 +3,9 @@ import { Dispatch, SetStateAction } from "react";
 export interface TreeNode {
     id: number;
     name: string;
-    parentId: number;
-    children?: TreeNode[];
+    // parentId: number;
+    subcategories?: TreeNode[];
+    services?: TreeNode[];
 }
   
 export interface TreeDropdownProps {

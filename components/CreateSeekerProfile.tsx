@@ -2,12 +2,9 @@
 
 import { PlusIcon } from '@radix-ui/react-icons';
 import Image from 'next/image'
-import React, { ChangeEvent, useEffect, useState } from 'react'
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
+import React, { ChangeEvent, useState } from 'react'
 import { z } from "zod"
 import { Button } from "@/components/ui/button"
-import { useRouter } from 'next/navigation';
 import {
   Form,
   FormControl,
@@ -25,57 +22,37 @@ import {
 } from "@/components/ui/select"
 import { Input } from "@/components/ui/input"
 import Link from 'next/link';
-import { useToast } from '@/hooks/use-toast';
-import { updateSeekerProfile } from '@/actions/user';
+import { createSeekerProfile } from '@/actions/user';
+import { useAuth } from '@/hooks/useAuth';
+import useCountries from '@/hooks/useCountries';
 
 const CreateSeekerProfile  = () => {
-  const [buttonStatus, setButtonStatus] = useState<boolean>(false)
   const [profileSrc, setProfileSrc] = useState<string>('');
-  const [imgBlob, setImgBlob] = useState<null | Blob>(null);
-  const [countries, setCountries] = useState<string[]>(["NG Nigeria"]);
-  const [countryEnum, setCountryEnum] = useState<any>(null);
-  const router = useRouter()
-  const { toast } = useToast()
-  const genderOptions = ["Male", "Female"] as const
+  const genderOptions = ["male", "female"] as const
 
-  useEffect(() => {
-   
-    const fecthcountry = async () => {
-      const data =  await fetch(
-        "https://valid.layercode.workers.dev/list/countries?format=select&flags=true&value=code"
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          return data.countries.map((country: any) => {
-            return country.label
-          })
-        });
-        setCountries(data);
-        setCountryEnum(z.enum(data));
-    }
+  const { countries, countrySchema } = useCountries();
 
-    fecthcountry()
-  }, []);
-
-
-  const formSchema = z.object({
-    full_name: z.string().min(2, { message: "Full name is required" }).max(50, { message: "Full name cannot exceed 50 characters" }),
-    country: countryEnum || z.string().min(1, { message: "Country is required" }),
-    state_of_residence: z.string().min(2, { message: "State is required" }).max(50, { message: "State cannot exceed 50 characters" }),
+  const schema = z.object({
+    first_name: z.string().min(2, { message: "First name is required" }).max(50, { message: "First name cannot exceed 50 characters" }),
+    last_name: z.string().min(2, { message: "Last name is required" }).max(50, { message: "Last name cannot exceed 50 characters" }),
+    country: countrySchema || z.string().min(1, { message: "Country is required" }),
+    state: z.string().min(2, { message: "State is required" }).max(50, { message: "State cannot exceed 50 characters" }),
     location: z.string().min(2, { message: "address is required" }),
+    date_of_birth: z.string().min(2, { message: "date of birth is required" }),
     phone_number: z.string().min(2, { message: "phone number is required" }),
     gender: z.enum(genderOptions),
+    avatar_file: z.instanceof(File).optional(),
   })
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      full_name: "",
-      country: "NG Nigeria",
-      state_of_residence: "",
-      location: "",
-      gender: "Male",
-    },
+  const {
+    form,
+    loading,
+    onSubmit
+  } = useAuth({
+    schema,
+    action: createSeekerProfile,
+    checked: true,
+    path: '/create-pin',
   })
 
   const handleProfile = (e: ChangeEvent<HTMLInputElement>) => {
@@ -83,40 +60,8 @@ const CreateSeekerProfile  = () => {
     if (files[0]) {
       const blob = new Blob([files[0]], { type: files[0].type });
       const imageUrl = URL.createObjectURL(blob);
+      form.setValue('avatar_file', files[0])
       setProfileSrc(imageUrl)
-      setImgBlob(files[0])
-    }
-  }
-
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    const formData = new FormData()
-    formData.set('full_name', values.full_name)
-    formData.set('country', values.country)
-    formData.set('state_of_residence', values.state_of_residence)
-    formData.set('gender', values.gender)
-    formData.set('location', values.location)
-    formData.set('phone_number', values.phone_number)
-    if(imgBlob instanceof Blob){
-      formData.set('profile_picture', imgBlob)
-    }else{
-      formData.set('profile_picture', '')
-    }
-    setButtonStatus(val => !val)
-    const res = await updateSeekerProfile(formData)
-    if(res?.username){
-      setButtonStatus(val => !val)
-      toast({
-        title: "Success ✅",
-        description: `profile created ${res.username}!`,
-      })
-      router.push('/find-service-providers')
-    }else{
-      toast({
-        title: "Error",
-        variant: 'destructive',
-        description: res.message,
-      })
-      setButtonStatus(val => !val)
     }
   }
 
@@ -148,7 +93,7 @@ const CreateSeekerProfile  = () => {
               <div>
                 <FormField
                   control={form.control}
-                  name="full_name"
+                  name="first_name"
                   render={({ field }) => (
                     <FormItem
                     className='w-full'
@@ -156,7 +101,25 @@ const CreateSeekerProfile  = () => {
                       <FormControl 
                       className='w-full'
                       >
-                        <Input className='w-full' placeholder="Full name" {...field} />
+                        <Input className='w-full' placeholder="First name" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div>
+                <FormField
+                  control={form.control}
+                  name="last_name"
+                  render={({ field }) => (
+                    <FormItem
+                    className='w-full'
+                    >
+                      <FormControl 
+                      className='w-full'
+                      >
+                        <Input className='w-full' placeholder="Last name" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -196,7 +159,7 @@ const CreateSeekerProfile  = () => {
                   render={({ field }) => (
                     <FormItem className='w-full'>
                       <FormControl>
-                        <Input className='w-full' placeholder="Phone number" {...field} />
+                        <Input className='w-full' placeholder="+234XXXXXXXXXX" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -222,8 +185,8 @@ const CreateSeekerProfile  = () => {
                       </FormControl>
                       <SelectContent>
                         {
-                          countries?.map((option: string) => (
-                            <SelectItem key={option} value={option}>{option}</SelectItem>
+                          countries?.map((c) => (
+                            <SelectItem key={c.name} value={c.id.toString()}>{c.name}</SelectItem>
                           ))
                         }
                       </SelectContent>
@@ -235,7 +198,7 @@ const CreateSeekerProfile  = () => {
 
               <FormField
                 control={form.control}
-                name="state_of_residence"
+                name="state"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className='font-normal text-xs text-primary-1'>State of Residence</FormLabel>
@@ -250,25 +213,38 @@ const CreateSeekerProfile  = () => {
               <div>
                 <FormField
                   control={form.control}
-                  name="location"
+                  name="date_of_birth"
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
-                        <Input placeholder="Enter Address" {...field} />
+                        <Input placeholder="YYYY-MM-DD" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
               </div>
-
+              <div>
+                <FormField
+                  control={form.control}
+                  name="location"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input placeholder="Enter Location" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
             </div>
           </div>
 
           <div className='mt-4 flex flex-col gap-y-4  w-full max-w-[482px] items-center'>
             <p className='text-black-2 font-medium text-[10px] sm:text-sm'>By Signing up, you agree to our <Link href="#"  className="text-[#3FBFA9]">Term & Conditions</Link> and <Link href="#"  className="text-[#3FBFA9]">Privacy Policy</Link></p>
-            <Button variant="default" className='w-full disabled:bg-primary-2' type="submit" disabled={buttonStatus}>
-              {buttonStatus ? 'Loading...' : 'Register'}
+            <Button variant="default" className='w-full disabled:bg-primary-2' type="submit" disabled={loading}>
+              {loading ? 'Loading...' : 'Create profile'}
             </Button>
             <p className='text-black-2 font-medium text-[10px] sm:text-sm'>Have an account? <Link href="/signin"  className="text-primary-1">Login</Link></p>
           </div>

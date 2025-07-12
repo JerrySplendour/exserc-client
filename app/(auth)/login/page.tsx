@@ -1,9 +1,5 @@
 "use client"
 
-import React, { useState } from 'react'
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -16,53 +12,26 @@ import { Input } from "@/components/ui/input"
 import Link from 'next/link';
 import Image from 'next/image'
 import { login } from '@/actions/auth'
-import { useToast } from '@/hooks/use-toast'
-import { useRouter } from 'next/navigation'
+import { LoginFormSchema } from '@/lib/definitions'
+import { Checkbox } from '@/components/ui/checkbox'
+import { useAuth } from '@/hooks/useAuth'
 
-const SignIn = () => {
-  const [buttonStatus, setButtonStatus] = useState<boolean>(false)
-  
-  const router = useRouter()
-  const { toast } = useToast()
-  const formSchema = z.object({
-    email: z.string().email({message: "Invalid email address"}),
-    password: z.string().min(8, { message: "Password must be at least 8 characters long" })
-    .max(50, { message: "Password cannot exceed 50 characters" })
-    .regex(/[a-z]/, { message: "Password must contain at least one lowercase letter" })
-    .regex(/[A-Z]/, { message: "Password must contain at least one uppercase letter" })
-    .regex(/[0-9]/, { message: "Password must contain at least one number" })
-    .regex(/[@$!%*?&]/, { message: "Password must contain at least one special character" })
-  })
+const Login = () => {
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      email: "",
-      password: ""
-    },
-  })
+  // Custom hook to handle authentication logic
+  // It uses the LoginFormSchema for validation and the login action for authentication
+  const {
+    form,
+    loading,
+    onSubmit,
+  } = useAuth({
+    schema: LoginFormSchema,
+    action: login,
+    checked: true,
+    path: '/find-service-providers',
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    const formData = new FormData()
-    formData.set("email", values.email)
-    formData.set("password", values.password)
-    setButtonStatus(val => !val)
-    const res = await login(formData)
-    if(res?.username){
-      toast({
-        title: "Success ✅",
-        description: `Welcome ${res.username}!`,
-      })
-      router.push('/find-service-providers')
-    }else{
-      toast({
-        title: "Error",
-        variant: 'destructive',
-        description: res.message,
-      })
-    }
-    setButtonStatus(val => !val)
-  }
+    })
+
 
   return (
     <div className='flex items-center justify-center w-full h-screen'>
@@ -86,7 +55,7 @@ const SignIn = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <Input placeholder="Email Address" {...field} />
+                      <Input type="email" placeholder="Email Address" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -109,10 +78,16 @@ const SignIn = () => {
             </div>
               
           </div>
+          <div className='flex items-center justify-between w-full mb-4 max-w-[482px]'>
+            <div className='flex items-center gap-2'>
+              <Checkbox id='login' />
+              <label htmlFor='login'  className='text-black-1 font-medium text-[10px] sm:text-sm'>Keep me logged in</label>
+            </div>
+            <Link href="login/forgot-password" className='text-red-400 font-medium text-xs sm:text-sm'>Forgot Password?</Link>
+          </div>
           <div className='mt-4 flex flex-col gap-y-4 w-full max-w-[482px] items-center'>
-            <p className='text-black-2 font-medium text-[10px] sm:text-sm'>By Signing up, you agree to our <Link href="#"  className="text-[#3FBFA9]">Term & Conditions</Link> and <Link href="#"  className="text-[#3FBFA9]">Privacy Policy</Link></p>
-            <Button variant="default" className='w-full' type="submit" disabled={buttonStatus}>
-              {buttonStatus ? 'Loading...' : 'Login'}
+            <Button variant="default" className='w-full' type="submit" disabled={loading}>
+              {loading ? 'Loading...' : 'Login'}
             </Button>
             <p className='text-black-2 font-medium text-[10px] sm:text-sm'>Don&rsquo;t have an account? <Link href="/signup" className="text-primary-1">Register</Link></p>
           </div>
@@ -123,4 +98,4 @@ const SignIn = () => {
   )
 }
 
-export default SignIn
+export default Login

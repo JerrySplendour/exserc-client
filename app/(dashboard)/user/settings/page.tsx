@@ -107,7 +107,7 @@ const Settings = () => {
         </section>
         <section className='flex flex-col xl:flex-row items-start gap-6 xl:gap-10 py-4'>
             <div className='flex flex-row xl:flex-col justify-between rounded-lg xl:rounded-2xl xl:border-2 overflow-hidden w-full max-w-[400px] xl:max-w-[270px] shadow-md xl:shadow-xl'>
-                <Link href="/settings" className='p-2 xl:p-3 px-4 bg-[#9A65CF4D] text-primary-1 font-medium text-base xl:text-xl'>
+                <Link href="/settings" className='p-2 xl:p-3 px-4 bg-primary-2 text-primary-1 font-medium text-base xl:text-xl'>
                     <span>Profile settings</span>
                 </Link>
                 <Link href="/password" className='p-2 lg:p-3 px-4 bg-[#fff] text-primary-1 flex-1 text-center xl:text-start font-medium text-base xl:text-xl'>
