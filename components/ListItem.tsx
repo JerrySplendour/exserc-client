@@ -21,7 +21,7 @@ const ListItem: FC<ListItemProps> = ({ item, setSelected, setOpen }) => {
     }, [isOpen]);
 
     const handleSelectElement = () => {
-      if(!item.children?.length){
+      if(!item.subcategories?.length && !item.services?.length) {
         setSelected(item.name);
         setOpen((val) => !val)
       } 
@@ -32,9 +32,9 @@ const ListItem: FC<ListItemProps> = ({ item, setSelected, setOpen }) => {
     <li
     >
       <div
-      className={cn(' flex items-center gap-2 transition-all ease-linear max-h-full text-sm sm:text-base lg:text-lg p-1', {"font-medium": (item?.parentId % 2)})}
+      className={cn(' flex items-center gap-2 transition-all ease-linear max-h-full text-sm sm:text-base lg:text-lg p-1', {"font-medium": (item?.id % 2)})}
       >
-        {(isOpen && item.children) ? (<TriangleDownIcon className='text-primary-1 w-6 h-6' onClick={toggleOpen}/>) : (<TriangleRightIcon className={cn('text-primary-1 w-6 h-6', {"text-white w-4": (!item.children)})}  onClick={toggleOpen}/>)}
+        {(isOpen || (item?.subcategories || item?.services )) ? (<TriangleDownIcon className='text-primary-1 w-6 h-6' onClick={toggleOpen}/>) : (<TriangleRightIcon className={cn('text-primary-1 w-6 h-6', {"text-white w-4": (!item?.subcategories || item?.services)})}  onClick={toggleOpen}/>)}
         <p className='cursor-pointer' onClick={handleSelectElement}>{item.name}</p>
       </div>
         <div
@@ -42,8 +42,8 @@ const ListItem: FC<ListItemProps> = ({ item, setSelected, setOpen }) => {
         style={{height: isOpen ? '100%' : height}}
         className='transition-all overflow-auto ease-linear max-h-full'
         >
-        {item.children && (
-          <List setOpen={setOpen} setSelected={setSelected} items={item.children} />
+        {(item.subcategories || item.services) && (
+          <List setOpen={setOpen} setSelected={setSelected} items={item?.subcategories || item?.services || []} />
         )}
         </div>
     </li>

@@ -9,7 +9,8 @@ const List: FC<ListProps> = ({items, setSelected, setOpen}) => {
     className='pl-5 '
     >
       {
-          items.map((item) => (
+        items &&
+          items?.map((item) => (
             <ListItem setOpen={setOpen} setSelected={setSelected} key={item.id} item={item} />
           ))
       }

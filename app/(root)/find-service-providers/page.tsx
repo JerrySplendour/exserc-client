@@ -4,7 +4,7 @@ import DropdownSelect from '@/components/DropdownSelect'
 import { Button } from '@/components/ui/button'
 import { StarFilledIcon, StarIcon } from '@radix-ui/react-icons'
 import Image from 'next/image'
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useState, useEffect } from 'react'
 import { Input } from '@/components/ui/input'
 import { FaMapLocationDot } from 'react-icons/fa6'
 import {
@@ -19,6 +19,7 @@ import { MdLocationPin } from 'react-icons/md'
 import { usePathname, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { cn, Dashboardlinks } from '@/lib/utils'
+import { toast } from '@/hooks/use-toast'
   
 
   
@@ -38,11 +39,14 @@ const Seeker = () => {
     setSearchText(e.target.value)
   }
 
+
+
   const handleSelectCurrentLocation = () => {
     setCurrentLocation("Effurun, PTI road Masojie")
   }
 
   const handleSubmit = () => {
+    
     router.push("/service-categories/" + selected.toLowerCase().replace(" ", "-"))
   }
       

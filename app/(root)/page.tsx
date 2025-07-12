@@ -16,7 +16,9 @@ import Menubar from "@/components/Menubar";
 export default function Home() {
 
   useEffect(() => {
-    AOS.init();
+    AOS.init({
+      once: true
+    });
   }, [])
 
   return (
@@ -72,8 +74,8 @@ export default function Home() {
             <h1 className="font-bold text-xl md:text-[32px] md:leading-[40px] text-center text-black-1">Join Nigeria’s service market <br />
             for Service providers</h1>
           </div>
-          <div className="grid grid-cols-1 gap-y-4 md:grid-cols-3 grid-rows-1 gap-x-8" data-aos="zoom-in">
-            <div className="bg-white flex flex-col gap-y-6 items-center justify-center p-10">
+          <div className="grid grid-cols-1 gap-y-4 md:grid-cols-3 grid-rows-1 gap-x-8" >
+            <div className="bg-white flex flex-col gap-y-6 items-center justify-center p-10" data-aos="fade-down" data-aos-duration="800">
               <figure className="w-[68px] h-[48px]">
               <Image
                 src="/assets/images/workman.png"
@@ -88,7 +90,7 @@ export default function Home() {
               <p className="text-center text-[13px] leading-[17px] text-black-2">Lorem ipsum dolor sit amet,consectetur
               adipiscing elit, sed do eiusmod temporincididunt ut labore et dolore magna aliqua. Ut enim ad minimveniam, q</p>
             </div>
-            <div className="bg-white flex flex-col gap-y-6 items-center justify-center p-10">
+            <div className="bg-white flex flex-col gap-y-6 items-center justify-center p-10" data-aos="fade-up" data-aos-duration="800">
               <figure className="w-[68px] h-[48px]">
               <Image
                 src="/assets/images/money.png"
@@ -102,7 +104,7 @@ export default function Home() {
               <p className="text-center text-[13px] leading-[17px] text-black-2">Lorem ipsum dolor sit amet,consectetur
               adipiscing elit, sed do eiusmod temporincididunt ut labore et dolore magna aliqua. Ut enim ad minimveniam, q</p>
             </div>
-            <div className="bg-white flex flex-col gap-y-6 items-center justify-center p-10">
+            <div className="bg-white flex flex-col gap-y-6 items-center justify-center p-10" data-aos="fade-down" data-aos-duration="800">
               <figure className="w-[68px] h-[48px]">
               <Image
                 src="/assets/images/handshake.png"
@@ -264,7 +266,7 @@ export default function Home() {
       </section>
       <section className="flex items-center justify-center px-[25px] lg:px-[100px] pt-24 pb-32 bg-[#F4F3F5]">
         <div className="grid grid-cols-1 w-full md:grid-cols-2 xl:grid-cols-4 grid-rows-1 gap-y-10 gap-x-12">
-          <div className="relative flex flex-col gap-y-6 items-center justify-center h-[400px]" data-aos="flip-left" data-aos-duration="1000">
+          <div className="relative flex flex-col gap-y-6 items-center justify-center h-[400px]" data-aos="fade-up" data-aos-delay="300" data-aos-duration="800">
             <figure className="w-full h-full">
             <Image
               src="/assets/images/chef.png"
@@ -283,7 +285,7 @@ export default function Home() {
             />
             <p className="text-start absolute bottom-0 text-[15px] leading-[20px] p-2 text-white font-bold">Lorem ipsum dolor sit amet,consecte</p>
           </div>
-          <div className="relative flex flex-col gap-y-6 items-center justify-center h-[400px]" data-aos="flip-right" data-aos-duration="1000">
+          <div className="relative flex flex-col gap-y-6 items-center justify-center h-[400px]" data-aos="fade-up" data-aos-delay="600" data-aos-duration="800">
             <figure className="w-full h-full">
             <Image
               src="/assets/images/bricklayer.png"
@@ -302,7 +304,7 @@ export default function Home() {
             />
             <p className="text-start absolute bottom-0 text-[15px] leading-[20px] p-2 text-white font-bold">Lorem ipsum dolor sit amet,consecte</p>
           </div>
-          <div className="relative flex flex-col gap-y-6 items-center justify-center h-[400px]" data-aos="flip-left" data-aos-duration="1000">
+          <div className="relative flex flex-col gap-y-6 items-center justify-center h-[400px]" data-aos="fade-up" data-aos-delay="900" data-aos-duration="800">
             <figure className="w-full h-full">
             <Image
               src="/assets/images/electrician.png"
@@ -321,7 +323,7 @@ export default function Home() {
             />
             <p className="text-start absolute bottom-0 text-[15px] leading-[20px] p-2 text-white font-bold">Lorem ipsum dolor sit amet,consecte</p>
           </div>
-          <div className="relative flex flex-col gap-y-6 items-center justify-center h-[400px]" data-aos="flip-right" data-aos-duration="1000">
+          <div className="relative flex flex-col gap-y-6 items-center justify-center h-[400px]" data-aos="fade-up" data-aos-delay="1200" data-aos-duration="800">
             <figure className="w-full h-full">
             <Image
               src="/assets/images/driver.png"
@@ -344,7 +346,7 @@ export default function Home() {
       </section>
       <section className="bg-white items-center flex justify-center px-[25px] h-[100px] md:h-[250px] relative">
         <div className="flex max-w-[990px] max-h-[198px] w-full absolute -top-10">
-          <div className="bg-primary-1 text-white flex justify-center gap-x-3 py-2 lg:gap-x-8 items-center flex-1">
+          <div className="bg-primary-1 text-white flex justify-center gap-x-3 py-2 lg:gap-x-8 items-center flex-1" data-aos="fade-down" data-aos-duration="800">
             <div className="flex flex-col justify-start gap-y-3">
               <h1 className="font-bold text-xl md:text-3xl lg:text-5xl">500+</h1>
               <p className="md:text-base text-sm lg:text-xl">Service seekers</p>
@@ -359,7 +361,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="relative hidden md:block">
+          <div className="relative hidden md:block" data-aos="fade-down" data-aos-duration="800">
             <figure className=" w-[200px] lg:w-[266px] h-[198px] z-0">
               <Image
                 src="/assets/images/salesman.png"
