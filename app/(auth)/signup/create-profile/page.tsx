@@ -7,21 +7,21 @@ import React from 'react'
 
 const CreateProfile = () => {
 
-    // It uses the Otp schema for validation and the verifyOtp action for OTP verification
-    const searchParams = useSearchParams();
-    // Extract end of path to get the option parameter
-    const role = searchParams.get("role")
+  // It uses the Otp schema for validation and the verifyOtp action for OTP verification
+  const searchParams = useSearchParams();
+  // Extract end of path to get the option parameter
+  const role = searchParams.get("role")
 
-  if(role === 'seeker'){
+  if (role === 'seeker') {
     return (
-        <CreateSeekerProfile />
+      <CreateSeekerProfile />
     )
-  }else if(role === 'provider'){
+  } else if (role === 'provider') {
     return (
-        <CreateProviderProfile />
+      <CreateProviderProfile />
     )
   }
-  
+
 }
 
 export default CreateProfile

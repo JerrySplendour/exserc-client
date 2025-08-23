@@ -1,6 +1,18 @@
 import { CreateeProviderProfileSchema, CreateSeekerProfileSchema } from "@/lib/definitions"
 import { deleteSession, getSession } from "@/lib/session"
 
+
+// This function creates or updates a seeker profile
+// It validates the form data, checks for a valid session, sends a request to the API, and returns the response.
+/** 
+ * @param formData - The form data containing seeker profile details such as name, location, date of birth, phone number, and gender.
+ * @returns 
+ * This function returns an object containing either the profile data or errors from the profile creation process.
+ * - If no session is found, it returns a message prompting the user to request an OTP first.
+ * - If validation fails, it returns the validation errors and a message.
+ * - If the API request fails, it returns the server error message or a default error.
+ * - If successful, it returns the seeker profile data.
+ */
 export async function createSeekerProfile (formData: FormData) {
     try {
         const session = await getSession('VERIFICATION')
@@ -42,6 +54,7 @@ export async function createSeekerProfile (formData: FormData) {
           }
         }
 
+        await deleteSession('VERIFICATION');
         return {
             data: result?.data
         }
@@ -53,6 +66,18 @@ export async function createSeekerProfile (formData: FormData) {
     }
 }
 
+
+// This function creates or updates a provider profile
+// It validates the form data, checks for a valid session, sends a request to the API, and returns the response.
+/** 
+ * @param formData - The form data containing provider profile details such as personal info, business name, services, education, and location.
+ * @returns 
+ * This function returns an object containing either the profile data or errors from the profile creation process.
+ * - If no session is found, it returns a message prompting the user to request an OTP first.
+ * - If validation fails, it returns the validation errors and a message.
+ * - If the API request fails, it returns the server error message or a default error.
+ * - If successful, it returns the provider profile data.
+ */
 export async function createProviderProfile (formData: FormData) {
 
     try {
@@ -100,6 +125,7 @@ export async function createProviderProfile (formData: FormData) {
           }
         }
 
+        await deleteSession('VERIFICATION')
         return {
             data: result?.data
         }

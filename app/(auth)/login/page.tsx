@@ -36,7 +36,7 @@ const Login_old = () => {
     checked: true,
     path: '/find-service-providers',
 
-    })
+  })
 
 
   return (
@@ -87,7 +87,7 @@ const Login_old = () => {
           <div className='flex items-center justify-between w-full mb-4 max-w-[482px]'>
             <div className='flex items-center gap-2'>
               <Checkbox id='login' />
-              <label htmlFor='login'  className='text-black-1 font-medium text-[10px] sm:text-sm'>Keep me logged in</label>
+              <label htmlFor='login' className='text-black-1 font-medium text-[10px] sm:text-sm'>Keep me logged in</label>
             </div>
             <Link href="login/forgot-password" className='text-red-400 font-medium text-xs sm:text-sm'>Forgot Password?</Link>
           </div>
@@ -105,10 +105,20 @@ const Login_old = () => {
 }
 
 function Login() {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    keepLoggedIn: false,
+
+  // Custom hook to handle authentication logic
+  // It uses the LoginFormSchema for validation and the login action for authentication
+  const [checked, setChecked] = useState<boolean>(false);
+  const {
+    form,
+    loading,
+    onSubmit,
+  } = useAuth({
+    schema: LoginFormSchema,
+    action: login,
+    checked: true,
+    path: '/find-service-providers',
+
   })
 
   return (
@@ -121,7 +131,7 @@ function Login() {
         <div className="text-center mb-8">
           <div className="text-2xl font-bold text-teal-600 mb-0 flex items-center justify-center">
             <Link href="/">
-              <div className='w-40 h-12 rounded-md overflow-hidden'>
+              <div className='w-40 h-12 rounded-md overflow-hidden opacity-90'>
                 <Image src='/assets/images/logo-1.png' className='block object-contain w-full h-full' alt='logo' width={100} height={50} />
               </div>
             </Link>
@@ -129,60 +139,70 @@ function Login() {
           <h1 className="text-2xl font-bold text-gray-900">Login</h1>
         </div>
 
-        <form className="space-y-4">
-          <div>
-            <input
-              type="email"
-              placeholder="Email Address"
-              value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none"
-            />
-          </div>
+        <Form {...form}>
+          <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
 
-          <div>
-            <input
-              type="password"
-              placeholder="Password"
-              value={formData.password}
-              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none"
-            />
-          </div>
+            <div className="flex flex-col gap-y-5 w-full max-w-[482px]">
+              <div>
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input type="email" placeholder="Email Address" {...field}
+                          className="w-full px-4 py-6 text-[16px] border bg-white/0 border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none" />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div>
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input type='password' placeholder="Password" {...field}
+                          className="w-full px-4 py-6 text-[16px] border bg-white/0 border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none" />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
 
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <button
-                type="button"
-                onClick={() => setFormData({ ...formData, keepLoggedIn: !formData.keepLoggedIn })}
-                className={`w-5 h-5 rounded border-2 flex items-center justify-center ${formData.keepLoggedIn ? "bg-teal-600 border-teal-600" : "border-gray-300"
-                  }`}
-              >
-                {formData.keepLoggedIn && <Check className="text-white" size={12} />}
-              </button>
-              <span className="text-sm text-gray-600">Keep me logged in</span>
             </div>
-            <Link href="/forgot-password" className="text-sm text-red-500 hover:underline">
-              Forgot Password?
-            </Link>
-          </div>
 
-          <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            type="submit"
-            className="w-full bg-teal-600 text-white py-3 rounded-lg font-semibold hover:bg-teal-700 transition-colors"
-          >
-            Login
-          </motion.button>
+            <div className='flex items-center justify-between w-full mb-4 max-w-[482px]'>
+              <div className='flex items-center gap-2'>
+                <Checkbox id='login'
+                  className={`w-5 h-5 rounded border-2 flex items-center justify-center ${checked ? "bg-teal-600 border-teal-600" : "border-gray-300"}`} />
+                <label htmlFor='login' className='text-gray-600 font-medium text-[10px] sm:text-sm'>Keep me logged in</label>
+              </div>
+              <Link href="login/forgot-password" className='text-red-500 hover:underline font-medium text-xs sm:text-sm'>Forgot Password?</Link>
+            </div>
 
-          <p className="text-center text-gray-600">
-            Don't have an account?{" "}
-            <Link href="/signup" className="text-teal-600 hover:underline">
-              Sign Up
-            </Link>
-          </p>
-        </form>
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              type="submit"
+              disabled={loading}
+              className="w-full bg-teal-600 text-white py-3 rounded-lg font-semibold hover:bg-teal-700 transition-colors"
+            >
+              {loading ? 'Loading...' : 'Login'}
+            </motion.button>
+
+            <p className="text-center text-gray-600">
+              Don't have an account?{" "}
+              <Link href="/signup" className="text-teal-600 hover:underline">
+                Sign Up
+              </Link>
+            </p>
+          </form>
+        </Form>
       </motion.div>
     </div>
   )

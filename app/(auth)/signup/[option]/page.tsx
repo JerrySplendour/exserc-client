@@ -19,7 +19,7 @@ import { motion } from "framer-motion"
 import { User, Check, Plus } from "lucide-react"
 
 
-const SignUpOption_old = ({params}: {params: {option: 'seeker' | 'provider'}}) => {
+const SignUpOption_old = ({ params }: { params: { option: 'seeker' | 'provider' } }) => {
   const [checked, setChecked] = useState<boolean>(false)
 
   // Custom hook to handle authentication logic
@@ -39,8 +39,8 @@ const SignUpOption_old = ({params}: {params: {option: 'seeker' | 'provider'}}) =
   return (
     <div className='flex items-center justify-center w-full h-screen'>
       <Form {...form}>
-        <form className='flex items-center flex-col gap-y-9 w-full max-w-[1024px] px-4' 
-        onSubmit={form.handleSubmit(onSubmit)}
+        <form className='flex items-center flex-col gap-y-9 w-full max-w-[1024px] px-4'
+          onSubmit={form.handleSubmit(onSubmit)}
         >
           <div className='flex flex-col w-full items-center'>
             <h1 className='font-normal text-2xl sm:text-3xl text-center text-black-1'>Register</h1>
@@ -103,17 +103,17 @@ const SignUpOption_old = ({params}: {params: {option: 'seeker' | 'provider'}}) =
                 )}
               />
             </div>
-              
+
           </div>
           <div className='mt-4 flex flex-col gap-y-4  w-full max-w-[482px] items-center'>
             <div className='flex items-center gap-2'>
               <Checkbox id='terms' onCheckedChange={(val: boolean) => setChecked(val)} />
-              <label htmlFor='terms'  className='text-black-2 font-medium text-[10px] sm:text-sm'>By Signing up, you agree to our <Link href="#"  className="text-[#3FBFA9]">Term & Conditions</Link> and <Link href="#"  className="text-[#3FBFA9]">Privacy Policy</Link></label>
+              <label htmlFor='terms' className='text-black-2 font-medium text-[10px] sm:text-sm'>By Signing up, you agree to our <Link href="#" className="text-[#3FBFA9]">Term & Conditions</Link> and <Link href="#" className="text-[#3FBFA9]">Privacy Policy</Link></label>
             </div>
             <Button variant="default" className='w-full disabled:bg-primary-2' type="submit" disabled={loading}>
               {loading ? 'Loading...' : 'Register'}
             </Button>
-            <p className='text-black-2 font-medium text-[10px] sm:text-sm'>Have an account? <Link href="/signin"  className="text-primary-1">Login</Link></p>
+            <p className='text-black-2 font-medium text-[10px] sm:text-sm'>Have an account? <Link href="/signin" className="text-primary-1">Login</Link></p>
           </div>
         </form>
       </Form>
@@ -121,15 +121,27 @@ const SignUpOption_old = ({params}: {params: {option: 'seeker' | 'provider'}}) =
   )
 }
 
-function SignUpOption({params}: {params: {option: 'seeker' | 'provider'}}) {
+function SignUpOption({ params }: { params: { option: 'seeker' | 'provider' } }) {
   const [formData, setFormData] = useState({
-    fullName: "Moses Johnson",
+    fullName: "",
     email: "",
     password: "",
     confirmPassword: "",
     agreeToTerms: false,
   })
-  const [checked, setChecked] = useState<boolean>(false)
+  const [checked, setChecked] = useState<boolean>(false);
+
+  const {
+    form,
+    loading,
+    onSubmit,
+  } = useAuth({
+    role: params.option,
+    schema: SignupFormSchema,
+    action: signup,
+    checked,
+    path: `/signup/verify?role=${params.option}`,
+  })
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
@@ -145,92 +157,116 @@ function SignUpOption({params}: {params: {option: 'seeker' | 'provider'}}) {
             </div>
             <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-teal-600 rounded-full flex items-center justify-center">
               {/* <span className="text-white text-xs font-bold">1</span> */}
-              <Plus className="text-white text-xs font-bold" size={11}/>
+              <Check className="text-white text-xs font-bold" size={11} />
             </div>
           </div>
           <h1 className="text-2xl font-bold text-gray-900 mb-2">Register</h1>
           <p className="text-teal-600">To {params.option === "seeker" ? "find" : "provide"} a service</p>
         </div>
 
-        <form className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Full name</label>
-            <input
-              type="text"
-              value={formData.fullName}
-              onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none"
-            />
-          </div>
+        <Form {...form}>
+          <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
 
-          <div>
-            <input
-              type="email"
-              placeholder="Email Address"
-              value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none"
-            />
-          </div>
+            <div className="flex flex-col gap-y-5 w-full max-w-[482px]">
+              <div>
+                <FormField
+                  control={form.control}
+                  name="full_name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input placeholder="Moses Johnson" {...field}
+                          className='w-full px-4 py-6 text-[16px] border bg-white/0 border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none' />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div>
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input placeholder="Email Address" {...field}
+                          className='w-full px-4 py-6 text-[16px] border bg-white/0 border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none' />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div>
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input type='password' placeholder="Password" {...field}
+                          className='w-full px-4 py-6 text-[16px] border bg-white/0 border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none' />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div>
+                <FormField
+                  control={form.control}
+                  name="confirm_password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input type='password' placeholder="Confirm Password" {...field}
+                          className='w-full px-4 py-6 text-[16px] border bg-white/0 border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none' />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
 
-          <div>
-            <input
-              type="password"
-              placeholder="Password"
-              value={formData.password}
-              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none"
-            />
-          </div>
+            </div>
 
-          <div>
-            <input
-              type="password"
-              placeholder="Confirm Password"
-              value={formData.confirmPassword}
-              onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none"
-            />
-          </div>
+            <div className="flex items-start space-x-3">
 
-          <div className="flex items-start space-x-3">
-            <button
-              type="button"
-              onClick={() => setFormData({ ...formData, agreeToTerms: !formData.agreeToTerms })}
-              className={`w-5 h-5 rounded border-2 flex items-center justify-center mt-0.5 ${
-                formData.agreeToTerms ? "bg-teal-600 border-teal-600" : "border-gray-300"
-              }`}
+              <Checkbox id='terms' onCheckedChange={(val: boolean) => setChecked(val)}
+                className={`w-5 h-5 rounded border-2 flex items-center justify-center mt-0.5 ${checked ? "bg-teal-600 border-teal-600" : "border-gray-300"
+                  }`} />
+              <p className="text-sm text-gray-600">
+                By Signing up, you agree to our{" "}
+                <Link href="/terms" className="text-teal-600 hover:underline">
+                  Terms & Conditions
+                </Link>{" "}
+                and{" "}
+                <Link href="/privacy" className="text-teal-600 hover:underline">
+                  Privacy Policy
+                </Link>
+              </p>
+            </div>
+
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              type="submit"
+              disabled={loading}
+              className="w-full bg-teal-600 text-white py-3 rounded-lg font-semibold hover:bg-teal-700 transition-colors"
             >
-              {formData.agreeToTerms && <Check className="text-white" size={12} />}
-            </button>
-            <p className="text-sm text-gray-600">
-              By Signing up, you agree to our{" "}
-              <Link href="/terms" className="text-teal-600 hover:underline">
-                Terms & Conditions
-              </Link>{" "}
-              and{" "}
-              <Link href="/privacy" className="text-teal-600 hover:underline">
-                Privacy Policy
+              {loading ? 'Loading...' : 'Register'}
+            </motion.button>
+
+            <p className="text-center text-gray-600">
+              Have an account?{" "}
+              <Link href="/login" className="text-teal-600 hover:underline">
+                Log in
               </Link>
             </p>
-          </div>
+          </form>
+        </Form>
 
-          <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            type="submit"
-            className="w-full bg-teal-600 text-white py-3 rounded-lg font-semibold hover:bg-teal-700 transition-colors"
-          >
-            Register
-          </motion.button>
-
-          <p className="text-center text-gray-600">
-            Have an account?{" "}
-            <Link href="/login" className="text-teal-600 hover:underline">
-              Log in
-            </Link>
-          </p>
-        </form>
       </motion.div>
     </div>
   )

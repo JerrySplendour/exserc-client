@@ -14,6 +14,7 @@ import Image from 'next/image'
 import { resetPassword } from '@/actions/auth'
 import { ResetPasswordSchema } from '@/lib/definitions'
 import { useAuth } from '@/hooks/useAuth'
+import { motion } from "framer-motion"
 
 const RestPassword = () => {
 
@@ -29,61 +30,75 @@ const RestPassword = () => {
     checked: true,
     path: '/login',
 
-    })
+  })
 
   return (
-    <div className='flex items-center justify-center w-full h-screen'>
-      <Form {...form}>
-        <form className='flex items-center flex-col gap-y-4 w-full max-w-[1024px] px-4' onSubmit={form.handleSubmit(onSubmit)}>
-          <div className='flex flex-col w-full items-center gap-2'>
-            <div>
-              <Link href="/">
-                <div className='w-12 h-12 rounded-md overflow-hidden'>
-                  <Image src='/assets/images/favicon.png' className='block w-full h-full object-cover' alt='logo' width={50} height={50} />
-                </div>
-              </Link>
+    <div className='min-h-screen bg-gray-50 flex items-center justify-center p-4'>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="bg-white rounded-2xl shadow-lg p-8 w-full max-w-xl"
+      >
+        <Form {...form}>
+          <form className='flex items-center flex-col gap-y-4 w-full max-w-[1024px] px-4' onSubmit={form.handleSubmit(onSubmit)}>
+            <div className='flex flex-col w-full items-center gap-2'>
+              <div>
+                <Link href="/">
+                  <div className='w-40 h-12 rounded-md overflow-hidden opacity-90'>
+                    <Image src='/assets/images/logo-1.png' className='block object-contain w-full h-full' alt='logo' width={100} height={50} />
+                  </div>
+                </Link>
+              </div>
+              <h1 className='font-bold text-2xl sm:text-3xl text-center text-black-1 mb-6'>Change Password</h1>
             </div>
-            <h1 className='font-bold text-2xl sm:text-3xl text-center text-black-1 mb-6'>Change Password</h1>
-          </div>
-          <div className="flex flex-col gap-y-5 w-full max-w-[482px]">
-            <div>
-              <FormField
-                control={form.control}
-                name="new_password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Input type='password' placeholder="New password" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div>
-              <FormField
-                control={form.control}
-                name="confirm_password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Input type='password' placeholder="Confirm password" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-              
-          </div>
-          <div className='mt-4 flex flex-col gap-y-4 w-full max-w-[482px] items-center'>
-            <Button variant="default" className='w-full' type="submit" disabled={loading}>
-              {loading ? 'Loading...' : 'Reset Password'}
-            </Button>
-          </div>
+            <div className="flex flex-col gap-y-5 w-full max-w-[482px]">
+              <div>
+                <FormField
+                  control={form.control}
+                  name="new_password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input type='password' placeholder="New password" {...field}
+                          className='w-full px-4 py-6 text-[16px] border bg-white/0 border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none' />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div>
+                <FormField
+                  control={form.control}
+                  name="confirm_password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input type='password' placeholder="Confirm password" {...field}
+                          className='w-full px-4 py-6 text-[16px] border bg-white/0 border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none' />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
 
-        </form>
-      </Form>
+            </div>
+            <div className='mt-4 flex flex-col gap-y-4 w-full max-w-[482px] items-center'>
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                type="submit"
+                disabled={loading}
+                className="w-full bg-teal-600 text-white py-3 rounded-lg font-semibold hover:bg-teal-700 transition-colors"
+              >
+                {loading ? 'Loading...' : 'Reset Password'}
+              </motion.button>
+            </div>
+
+          </form>
+        </Form>
+      </motion.div>
     </div>
   )
 }

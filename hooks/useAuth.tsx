@@ -86,7 +86,7 @@ export const useAuth = ({
           if (path){
              router.push(path)
           }
-        }, 5000)
+        }, 500)
       }
     } catch (error) {
         // Handle unexpected errors

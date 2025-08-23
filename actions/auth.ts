@@ -1,6 +1,14 @@
 import { ForgotPasswordSchema, LoginFormSchema, Otp, Pin, ResetPasswordSchema, SignupFormSchema } from '@/lib/definitions'
 import { createSession, deleteSession, getSession, updateSession } from '@/lib/session'
- 
+
+
+
+
+
+/** REGISTRATION 
+ * functions Below:
+ * signup, verifyRegistrationOtp, requestRegistrationOtp, (createSeekerProfile), (createProviderProfile)
+*/
 
 // This function handles user registration
 // It validates the form data, sends a registration request to the API, and creates a session
@@ -42,7 +50,7 @@ export async function signup(formData: FormData) {
       },
     });
 
-    
+
     const responseBody = await res.json();
     if (!res.ok) {
       // Server-side validation failed
@@ -58,7 +66,7 @@ export async function signup(formData: FormData) {
       email: string; role: 'seeker' | 'provider'; id: number
     } = responseBody.data;
 
-    createSession('VERIFICATION', {email, role, id});
+    createSession('VERIFICATION', { email, role, id });
 
     return {
       data: role,
@@ -71,219 +79,6 @@ export async function signup(formData: FormData) {
   }
 }
 
-// This function handles user login
-// It validates the form data, sends a login request to the API, and creates a session
-/**
- * 
- * @param formData - The form data containing user login details
- * @returns 
- * This function returns an object containing either the data or errors from the login process.
- * If the login is successful, it returns the user's first name.
- * If there are validation errors, it returns the errors and a message indicating that the form fields were not validated.
- * If the login fails, it returns a message indicating the failure and any errors from the server.
- */
-export async function login(formData: FormData){
-  // 1. Validate form fields
-  const validatedFields = LoginFormSchema.safeParse({
-    email: formData.get('email'),
-    password: formData.get('password')
-  });
-
-  if (!validatedFields.success) {
-    return {
-      errors: validatedFields.error.flatten().fieldErrors,
-      message: 'Form fields not validated',
-    };
-  }
-
-  const validatedData = validatedFields.data;
-  try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
-      method: 'POST',
-      headers: {
-        'content-Type': 'application/json'
-      },
-      body: JSON.stringify(validatedData)
-    })
-
-    const responseBody = await res.json()
-    if(!res.ok){
-      return {
-        message: responseBody.message || 'Login request failed',
-        error: responseBody.error
-      }
-    }
-
-    createSession('USER',{
-      email: responseBody?.data?.user?.email,
-      role: responseBody?.data?.user?.role,
-      id: responseBody?.data?.user?.id
-    });
-
-    return {
-      data: responseBody?.data?.user?.first_name || 'User',
-    }
-  } catch (error: any) {
-    return {
-      message: 'Something went wrong! Please try again later.',
-      error: error?.message || error,
-    };
-  }
-}
-
-// This function requests a registration OTP
-// It retrieves the session data, sends a request to the API to resend the OTP, and returns the response
-/**
-  * @returns 
-  * This function returns an object containing either the data or errors from the OTP request process.
-  * If the OTP request is successful, it returns a success message.
-  * If there are validation errors, it returns the errors and a message indicating that the session was not found.
-  * If the OTP request fails, it returns a message indicating the failure and any errors from the server.
- */
-export async function requestRegistrationOtp(){
-  // get session data
-  const session = await getSession('VERIFICATION');
-  if (!session) {
-    return {
-      message: 'Session not found. Please log in again.',
-      errors: { session: 'Session not found' },
-    };
-  }
-
-  try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/resend-otp/${session?.id}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email: session.email }),
-    });
-
-    const responseBody = await res.json();
-    if (!res.ok) {
-      // Server-side validation failed
-      return {
-        message: responseBody.message || 'OTP request failed. Please try again.',
-        errors: responseBody.errors || null,
-      };
-    }
-
-    return {
-      data: responseBody.message || 'OTP sent successfully!',
-    };
-  } catch (error: any) {
-    return {
-      message: 'Something went wrong! Please try again later.',
-      error: error?.message || error,
-    };
-  }
-}
-
-// This function requests a forgot password OTP
-// It validates the form data, sends a request to the API to send the OTP, and returns the response
-/** 
- * @param formData - The form data containing the email address
-  * @returns 
-  * This function returns an object containing either the data or errors from the OTP request process.
-  * creates a session with the email address to be used later for verification.
-  * If the OTP request is successful, it returns a success message.
-  * If there are validation errors, it returns the errors and a message indicating that the form fields were not validated.
-  * If the OTP request fails, it returns a message indicating the failure and any errors from the server.
-  */
-export async function requestForgotPasswordOtp(formData: FormData) {
-  // get session data
-  const validatedFields = ForgotPasswordSchema.safeParse({
-    email: formData.get('email'),
-  });
-
-  try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/forgot-password`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(validatedFields.data),
-    });
-
-    const responseBody = await res.json();
-    if (!res.ok) {
-      // Server-side validation failed
-      return {
-        message: responseBody.message || 'OTP request failed. Please try again.',
-        errors: responseBody.errors || null,
-      };
-    }
-
-    // create session
-    createSession('VERIFICATION' ,{
-      email: formData.get('email')?.toString() || '',
-      reset_token: responseBody?.data?.reset_token
-    });
-
-    return {
-      data: responseBody.message || 'OTP sent successfully!',
-    };
-  } catch (error: any) {
-    return {
-      message: 'Something went wrong! Please try again later.',
-      error: error?.message || error,
-    };
-  }
-}
-
-// This function resends the forgot password OTP
-// It validates the form data, sends a request to the API to resend the OTP, and
-/**
- * 
- * @returns 
- * This function returns an object containing either the data or errors from the OTP resend process.
- * If the OTP resend is successful, it returns a success message.
- * If there are validation errors, it returns the errors and a message indicating that the form fields were not validated.
- * If the resend fails, it returns a message indicating the failure and any errors from the server
- */
-export async function resendForgotPasswordOtp() {
-  // get session data
-  const session = await getSession('VERIFICATION');
-  if (!session) {
-    return {
-      message: 'Session not found. try again later.',
-      errors: { session: 'Session not found' },
-    };
-  }
-
-  try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/resend-otp-forgot-password`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email: session.email,}),
-    });
-
-    const responseBody = await res.json();
-    if (!res.ok) {
-      // Server-side validation failed
-      return {
-        message: responseBody.message || 'OTP request failed. Please try again.',
-        errors: responseBody.errors || null,
-      };
-    }
-
-    updateSession('VERIFICATION', {
-      reset_token: responseBody?.data?.reset_token
-    });
-
-    return {
-      data: responseBody.message || 'OTP sent successfully!',
-    };
-  } catch (error: any) {
-    return {
-      message: 'Something went wrong! Please try again later.',
-      error: error?.message || error,
-    };
-  }
-}
 
 // This function verifies the registration OTP
 // It retrieves the session data, validates the OTP, sends a request to the API to verify the OTP, and returns the response
@@ -351,6 +146,240 @@ export async function verifyRegistrationOtp(formData: FormData) {
   }
 }
 
+
+// This function requests a registration OTP
+// It retrieves the session data, sends a request to the API to resend the OTP, and returns the response
+/**
+  * @returns 
+  * This function returns an object containing either the data or errors from the OTP request process.
+  * If the OTP request is successful, it returns a success message.
+  * If there are validation errors, it returns the errors and a message indicating that the session was not found.
+  * If the OTP request fails, it returns a message indicating the failure and any errors from the server.
+ */
+export async function requestRegistrationOtp() {
+  // get session data
+  const session = await getSession('VERIFICATION');
+  if (!session) {
+    return {
+      message: 'Session not found. Please log in again.',
+      errors: { session: 'Session not found' },
+    };
+  }
+
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/resend-otp/${session?.id}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email: session.email }),
+    });
+
+    const responseBody = await res.json();
+    if (!res.ok) {
+      // Server-side validation failed
+      return {
+        message: responseBody.message || 'OTP request failed. Please try again.',
+        errors: responseBody.errors || null,
+      };
+    }
+
+    return {
+      data: responseBody.message || 'OTP sent successfully!',
+    };
+  } catch (error: any) {
+    return {
+      message: 'Something went wrong! Please try again later.',
+      error: error?.message || error,
+    };
+  }
+}
+
+
+/** 
+ * Functions for createSeekerProfile & createProviderProfile can found in /actions/user.ts 
+*/
+
+
+
+
+
+
+/** LOGIN 
+ * functions Below: 
+ * login, requestForgotPasswordOtp, resendForgotPasswordOtp, verifyForgotPasswordOtp, resetPassword
+*/
+
+// This function handles user login
+// It validates the form data, sends a login request to the API, and creates a session
+/**
+ * 
+ * @param formData - The form data containing user login details
+ * @returns 
+ * This function returns an object containing either the data or errors from the login process.
+ * If the login is successful, it returns the user's first name.
+ * If there are validation errors, it returns the errors and a message indicating that the form fields were not validated.
+ * If the login fails, it returns a message indicating the failure and any errors from the server.
+ */
+export async function login(formData: FormData) {
+  // 1. Validate form fields
+  const validatedFields = LoginFormSchema.safeParse({
+    email: formData.get('email'),
+    password: formData.get('password')
+  });
+
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Form fields not validated',
+    };
+  }
+
+  const validatedData = validatedFields.data;
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
+      method: 'POST',
+      headers: {
+        'content-Type': 'application/json'
+      },
+      body: JSON.stringify(validatedData)
+    })
+
+    const responseBody = await res.json()
+    if (!res.ok) {
+      return {
+        message: responseBody.message || 'Login request failed',
+        error: responseBody.error
+      }
+    }
+
+    createSession('USER', {
+      email: responseBody?.data?.user?.email,
+      role: responseBody?.data?.user?.role,
+      id: responseBody?.data?.user?.id
+    });
+
+    return {
+      data: responseBody?.data?.user?.first_name || 'User',
+    }
+  } catch (error: any) {
+    return {
+      message: 'Something went wrong! Please try again later.',
+      error: error?.message || error,
+    };
+  }
+}
+
+
+// This function requests a forgot password OTP
+// It validates the form data, sends a request to the API to send the OTP, and returns the response
+/** 
+ * @param formData - The form data containing the email address
+  * @returns 
+  * This function returns an object containing either the data or errors from the OTP request process.
+  * creates a session with the email address to be used later for verification.
+  * If the OTP request is successful, it returns a success message.
+  * If there are validation errors, it returns the errors and a message indicating that the form fields were not validated.
+  * If the OTP request fails, it returns a message indicating the failure and any errors from the server.
+  */
+export async function requestForgotPasswordOtp(formData: FormData) {
+  // get session data
+  const validatedFields = ForgotPasswordSchema.safeParse({
+    email: formData.get('email'),
+  });
+
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/forgot-password`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(validatedFields.data),
+    });
+
+    const responseBody = await res.json();
+    if (!res.ok) {
+      // Server-side validation failed
+      return {
+        message: responseBody.message || 'OTP request failed. Please try again.',
+        errors: responseBody.errors || null,
+      };
+    }
+
+    // create session
+    createSession('VERIFICATION', {
+      email: formData.get('email')?.toString() || '',
+      reset_token: responseBody?.data?.reset_token
+    });
+
+    return {
+      data: responseBody.message || 'OTP sent successfully!',
+    };
+  } catch (error: any) {
+    return {
+      message: 'Something went wrong! Please try again later.',
+      error: error?.message || error,
+    };
+  }
+}
+
+
+// This function resends the forgot password OTP
+// It validates the form data, sends a request to the API to resend the OTP, and
+/**
+ * 
+ * @returns 
+ * This function returns an object containing either the data or errors from the OTP resend process.
+ * If the OTP resend is successful, it returns a success message.
+ * If there are validation errors, it returns the errors and a message indicating that the form fields were not validated.
+ * If the resend fails, it returns a message indicating the failure and any errors from the server
+ */
+export async function resendForgotPasswordOtp() {
+  // get session data
+  const session = await getSession('VERIFICATION');
+  if (!session) {
+    return {
+      message: 'Session not found. try again later.',
+      errors: { session: 'Session not found' },
+    };
+  }
+
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/resend-otp-forgot-password`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: session.email,
+      }),
+    });
+
+    const responseBody = await res.json();
+    if (!res.ok) {
+      // Server-side validation failed
+      return {
+        message: responseBody.message || 'OTP request failed. Please try again.',
+        errors: responseBody.errors || null,
+      };
+    }
+
+    updateSession('VERIFICATION', {
+      reset_token: responseBody?.data?.reset_token
+    });
+
+    return {
+      data: responseBody.message || 'OTP sent successfully!',
+    };
+  } catch (error: any) {
+    return {
+      message: 'Something went wrong! Please try again later.',
+      error: error?.message || error,
+    };
+  }
+}
+
+
 // This function verifies the forgot password OTP
 // It validates the form data, sends a request to the API to verify the OTP, and returns the response
 /**
@@ -416,6 +445,7 @@ export async function verifyForgotPasswordOtp(formData: FormData) {
   }
 }
 
+
 // This function resets the password
 // It validates the form data, sends a request to the API to reset the password, and returns the response
 /**
@@ -435,7 +465,7 @@ export async function resetPassword(formData: FormData) {
     confirm_password: formData.get('confirm_password')
   })
 
-  if(!validatedData.success){
+  if (!validatedData.success) {
     return {
       error: validatedData.error.flatten().fieldErrors,
       message: 'form validated successfully'
@@ -444,7 +474,7 @@ export async function resetPassword(formData: FormData) {
 
   const session = await getSession('VERIFICATION')
 
-  if(!session) return {
+  if (!session) return {
     message: 'no token found, try forgot password again.'
   }
 
@@ -458,8 +488,8 @@ export async function resetPassword(formData: FormData) {
   })
 
   const response = await res.json()
-  
-  if(!res.ok){
+
+  if (!res.ok) {
     return {
       message: response.message || 'Password rest failed',
       error: response?.error || null
@@ -472,6 +502,23 @@ export async function resetPassword(formData: FormData) {
     data: response?.message || 'password reset successfully, login with new password.'
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // This function creates a transaction pin
 // It validates the form data, sends a request to the API to set the transaction pin, 
@@ -523,7 +570,7 @@ export async function createPin(formData: FormData) {
     });
 
     const responseBody = await res.json();
-    console.log("respponseBody", responseBody); 
+    console.log("respponseBody", responseBody);
     if (!res.ok) {
       // Server-side validation failed
       return {
