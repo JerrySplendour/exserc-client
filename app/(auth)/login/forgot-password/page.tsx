@@ -139,7 +139,7 @@ function ForgotPassword() {
             </motion.button>
 
             <p className="text-center text-gray-600">
-              Don't have an account?{" "}
+              Don&rsquo;t have an account?{" "}
               <Link href="/signup" className="text-teal-600 hover:underline">
                 Sign Up
               </Link>

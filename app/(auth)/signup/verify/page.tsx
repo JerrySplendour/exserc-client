@@ -17,7 +17,7 @@ import Countdown from "react-countdown";
 import { useSearchParams } from "next/navigation";
 import { motion } from "framer-motion"
 
-const verifyRegistration = () => {
+const VerifyRegistration = () => {
   // Custom hook to handle authentication logic
   // It uses the Otp schema for validation and the verifyRegistrationOtp action for OTP verification
   const searchParams = useSearchParams();
@@ -132,4 +132,4 @@ const verifyRegistration = () => {
   );
 };
 
-export default verifyRegistration;
+export default VerifyRegistration;

@@ -49,7 +49,7 @@ const Category = ({ params }: { params: { category: string } }) => {
         </section>
         <section className='flex flex-col gap-4 md:gap-8 py-4'>
             {serviceProviders.map((provider: {full_name: string, id: number}) => (
-                <div className='flex items-center gap-x-2 md:gap-x-4 justify-between p-2 md:p-6 border-[1px] border-primary-1 rounded-2xl'>
+                <div key={provider.id} className='flex items-center gap-x-2 md:gap-x-4 justify-between p-2 md:p-6 border-[1px] border-primary-1 rounded-2xl'>
                     <div className='w-[90px]  md:w-[124px] md:h-[92px] object-cover'>
                         <Image src="/assets/images/profile_pic.png" className='w-full h-full block object-cover' width={124} height={92} alt='profile pic' />
                     </div>

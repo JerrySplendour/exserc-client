@@ -16,7 +16,7 @@ import { Otp } from "@/lib/definitions";
 import Countdown from "react-countdown";
 import { motion } from "framer-motion"
 
-const verifyForgotPassword = () => {
+const VerifyForgotPassword = () => {
   // Custom hook to handle authentication logic
   // It uses the Otp schema for validation and the verifyForgotPasswordOtp action for OTP verification
 
@@ -131,4 +131,4 @@ const verifyForgotPassword = () => {
   );
 };
 
-export default verifyForgotPassword;
+export default VerifyForgotPassword;
