@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useToast } from "./use-toast";
+import { Toast } from "@/components/Toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -12,7 +13,7 @@ interface fetchParams {
   schema?: z.ZodSchema;
   action: (formData: FormData) => Promise<any>;
   checked?: boolean;
-  path?: string; 
+  path?: string;
 }
 
 export const useAuth = ({
@@ -20,7 +21,7 @@ export const useAuth = ({
   schema,
   action,
   checked = true,
-  path, 
+  path,
 }: fetchParams) => {
   const { toast } = useToast();
   // get router path
@@ -35,12 +36,12 @@ export const useAuth = ({
     },
   });
 
-  const successMessage = ({message}: {message?: string}) => {
+  const successMessage = ({ message }: { message?: string }) => {
     if ((pathname.endsWith("seeker") || pathname.endsWith('provider')) && pathname.includes('signup')) {
       return `Registration successful!`;
     } else if (pathname.endsWith("login")) {
       return `Welcome back ${message}!`;
-    } else{
+    } else {
       return message;
     }
   }
@@ -48,19 +49,20 @@ export const useAuth = ({
   const onSubmit = async (values: z.infer<typeof schema | any>) => {
     // Do not submit if the terms checkbox is not checked
     if (!checked) {
-       toast({
-        title: "Error",
-        variant: "destructive",
-        description: "Please accept the terms and conditions to proceed.",
-        duration: 3000
-      });
+      Toast.error("Please accept the terms and conditions to proceed.")
+      // t_oast({
+      //   title: "Error",
+      //   variant: "destructive",
+      //   description: "Please accept the terms and conditions to proceed.",
+      //   duration: 3000
+      // });
       return;
     }
     try {
       setLoading(true);
-        // create form data from values
+      // create form data from values
       const formData = new FormData();
-      if(values){
+      if (values) {
         Object?.entries(values)?.forEach(([key, value]) => {
           formData?.set(key, value as string);
         });
@@ -68,33 +70,35 @@ export const useAuth = ({
       const res = await action(formData);
       if (res?.message) {
         // Handle error response from the server
-        toast({
-          title: "Error",
-          variant: "destructive",
-          description: res.message,
-          duration: 3000
-        });
+        Toast.error(res.message)
+        // t_oast({
+        //   title: "Error",
+        //   variant: "destructive",
+        //   description: res.message,
+        //   duration: 3000
+        // });
       } else {
         // Handle successful response
-        toast({
-          title: "Success ✅",
-          description: successMessage({message: res?.data}),
-          duration: 3000
-        })
+        Toast.success(res?.data )
+        // t_oast({
+        //   title: "Success ✅",
+        //   description: successMessage({ message: res?.data }),
+        //   duration: 3000
+        // })
+
         // route to the specified path if provided
-        setTimeout(() => {
-          if (path){
-             router.push(path)
+        if (path) {
+            router.push(path)
           }
-        }, 500)
       }
     } catch (error) {
-        // Handle unexpected errors
-      toast({
-        title: "Unexpected Error",
-        variant: "destructive",
-        description: "Something went wrong.",
-      });
+      // Handle unexpected errors
+      Toast.error("Something went wrong: " + error);
+      // t_oast({
+      //   title: "Unexpected Error",
+      //   variant: "destructive",
+      //   description: "Something went wrong.",
+      // });
     } finally {
       setLoading(false);
     }

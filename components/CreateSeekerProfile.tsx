@@ -26,6 +26,7 @@ import { createSeekerProfile } from '@/actions/user';
 import { useAuth } from '@/hooks/useAuth';
 import useCountries from '@/hooks/useCountries';
 import { motion } from "framer-motion"
+import { ToastContainer } from "@/components/Toast";
 
 const CreateSeekerProfile = () => {
   const [profileSrc, setProfileSrc] = useState<string>('');
@@ -45,7 +46,7 @@ const CreateSeekerProfile = () => {
     state: z.string().min(2, { message: "State is required" }).max(50, { message: "State cannot exceed 50 characters" }),
     post_code: z.string().min(2, { message: "Post Code is required" }),
     location: z.string().min(2, { message: "address is required" }),
-    avatar_file: z.instanceof(File).optional(),
+    avatar_file: z.any().optional(),
   })
 
   const {
@@ -305,6 +306,7 @@ const CreateSeekerProfile = () => {
           </form>
         </Form>
       </motion.div>
+        <ToastContainer theme="dark" pauseOnHover newestOnTop pauseOnFocusLoss />
     </div>
   )
 }

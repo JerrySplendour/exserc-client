@@ -46,7 +46,7 @@ export const CreateSeekerProfileSchema_old = z.object({
   date_of_birth: z.string().min(2, { message: "date of birth is required" }),
   phone_number: z.string().min(2, { message: "phone number is required" }),
   gender: z.enum(['male', 'female']),
-  avatar_file: z.instanceof(File).optional(),
+  avatar_file: z.any().optional(),
 })
 export const CreateSeekerProfileSchema = z.object({
   first_name: z.string().min(2, { message: "First name is required" }).max(50, { message: "First name cannot exceed 50 characters" }),
@@ -59,10 +59,10 @@ export const CreateSeekerProfileSchema = z.object({
   state: z.string().min(2, { message: "State is required" }).max(50, { message: "State cannot exceed 50 characters" }),
   post_code: z.string().min(2, { message: "Post Code is required" }),
   location: z.string().min(2, { message: "address is required" }),
-  avatar_file: z.instanceof(File).optional(),
+  avatar_file: z.any().optional(),
 })
 
-export const CreateeProviderProfileSchema_old = z.object({
+export const CreateeProviderProfileSchema_ = z.object({
   first_name: z.string().min(2, { message: "First name is required" }).max(50, { message: "First name cannot exceed 50 characters" }),
   last_name: z.string().min(2, { message: "Last name is required" }).max(50, { message: "Last name cannot exceed 50 characters" }),
   business_name: z.string().min(2, { message: "company name is required" }).max(50, { message: "company name cannot exceed 50 characters" }),
@@ -77,26 +77,26 @@ export const CreateeProviderProfileSchema_old = z.object({
   bio: z.string().min(2, { message: "Bio is required" }),
   date_of_birth: z.string().min(2, { message: "date of birth is required" }),
   phone_number: z.string().regex(/^\+?[0-9]{6,14}$/, { message: "Invalid phone number" }),
-  avatar_file: z.instanceof(File).optional(),
+  avatar_file: z.any().optional(),
 })
 export const CreateeProviderProfileSchema = z.object({
   first_name: z.string().min(2, { message: "First name is required" }).max(50, { message: "First name cannot exceed 50 characters" }),
   last_name: z.string().min(2, { message: "Last name is required" }).max(50, { message: "Last name cannot exceed 50 characters" }),
-  gender: z.enum(genderOptions),
+  gender: z.enum(['male', 'female']),
   phone_number: z.string().regex(/^\+?[0-9]{6,14}$/, { message: "Invalid phone number" }),
   date_of_birth: z.string().min(2, { message: "date of birth is required" }),
   business_name: z.string().min(2, { message: "company name is required" }).max(50, { message: "company name cannot exceed 50 characters" }),
   core_service: z.string().min(1, { message: "Service category is required" }),
   skills: z.string().min(1, { message: "Service is required" }),
   // education_level: z.string().min(1, { message: "Education level is required" }),
-  available_work_time: z.string().nonempty("Work time is required"),
+  available_work_time: z.string().min(2,{message:"Work time is required"}),
   country: z.string().min(1, { message: "Country is required" }),
   state: z.string().min(2, { message: "State is required" }).max(50, { message: "State cannot exceed 50 characters" }),
   post_code: z.string().min(1, { message: "Postal Code is required" }),
   location: z.string().min(2, { message: "address is required" }),
   rc_number: z.string().optional(),
   // bio: z.string().min(2, { message: "Bio is required" }),
-  avatar_file: z.instanceof(File).optional(),
+  avatar_file: z.any().optional(),
 })
 
 

@@ -7,6 +7,7 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { Button } from "@/components/ui/button";
+import { Suspense } from "react";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import Link from "next/link";
 import Image from "next/image";
@@ -17,7 +18,7 @@ import Countdown from "react-countdown";
 import { useSearchParams } from "next/navigation";
 import { motion } from "framer-motion"
 
-const VerifyRegistration = () => {
+const VerifyRegistration_ = () => {
   // Custom hook to handle authentication logic
   // It uses the Otp schema for validation and the verifyRegistrationOtp action for OTP verification
   const searchParams = useSearchParams();
@@ -131,5 +132,14 @@ const VerifyRegistration = () => {
     </div>
   );
 };
+
+
+function VerifyRegistration() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <VerifyRegistration_ />
+    </Suspense>
+  );
+}
 
 export default VerifyRegistration;

@@ -96,6 +96,7 @@ export async function verifyRegistrationOtp(formData: FormData) {
   // get session data
   const session = await getSession('VERIFICATION');
   if (!session) {
+    // alert("no session found, go back request OTP")
     return {
       message: 'Session not found. Please log in again.',
       errors: { session: 'Session not found' },
@@ -108,6 +109,7 @@ export async function verifyRegistrationOtp(formData: FormData) {
   });
 
   if (!validatedFields.success) {
+    alert('Form fields not validated')
     return {
       errors: validatedFields.error.flatten().fieldErrors,
       message: 'Form fields not validated',

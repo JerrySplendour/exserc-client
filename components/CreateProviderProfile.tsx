@@ -29,6 +29,7 @@ import useCountries from '@/hooks/useCountries';
 import useService from '@/hooks/useService';
 import { useAuth } from '@/hooks/useAuth';
 import { motion } from "framer-motion"
+import { ToastContainer } from "@/components/Toast";
 
 const CreateProviderProfile = () => {
 
@@ -71,7 +72,7 @@ const CreateProviderProfile = () => {
     location: z.string().min(2, { message: "address is required" }),
     rc_number: z.string().optional(),
     // bio: z.string().min(2, { message: "Bio is required" }),
-    avatar_file: z.instanceof(File).optional(),
+    avatar_file: z.any().optional(),
   })
 
   const {
@@ -534,6 +535,7 @@ const CreateProviderProfile = () => {
           </form>
         </Form>
       </motion.div>
+        <ToastContainer theme="dark" pauseOnHover newestOnTop pauseOnFocusLoss />
     </div>
   )
 }

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Syne } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
+import { ToastContainer } from "@/components/Toast";
 
 const syne = Syne({ subsets: ["latin"] });
 
@@ -19,6 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={syne.className}>
         {children}
+        <ToastContainer theme="dark" pauseOnHover newestOnTop pauseOnFocusLoss />
         <Toaster />
       </body>
     </html>

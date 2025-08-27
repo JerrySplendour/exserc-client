@@ -3,9 +3,9 @@
 import CreateProviderProfile from '@/components/CreateProviderProfile'
 import CreateSeekerProfile from '@/components/CreateSeekerProfile'
 import { useSearchParams } from 'next/navigation';
-import React from 'react'
+import React, { Suspense } from 'react'
 
-const CreateProfile = () => {
+const CreateProfile_ = () => {
 
   // It uses the Otp schema for validation and the verifyOtp action for OTP verification
   const searchParams = useSearchParams();
@@ -23,5 +23,16 @@ const CreateProfile = () => {
   }
 
 }
+
+
+
+function CreateProfile() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <CreateProfile_ />
+    </Suspense>
+  );
+}
+
 
 export default CreateProfile

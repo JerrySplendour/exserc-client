@@ -25,13 +25,15 @@ export async function createSeekerProfile (formData: FormData) {
         const validatedFields = CreateSeekerProfileSchema.safeParse({
           first_name: formData.get('first_name'),
           last_name: formData.get('last_name'),
+          gender: formData.get('gender'),
+          username: formData.get('username'),
+          phone_number: formData.get('phone_number'),
+          date_of_birth: formData.get('date_of_birth'),
           country: formData.get('country'),
           state: formData.get('state'),
+          post_code: formData.get('post_code'),
           location: formData.get('location'),
-          date_of_birth: formData.get('date_of_birth'),
-          phone_number: formData.get('phone_number'),
-          // avatar_file: formData.get('avatar_file'),
-          gender: formData.get('gender')
+          avatar_file: formData.get('avatar_file'),
         })
 
         if(!validatedFields.success){
@@ -43,7 +45,7 @@ export async function createSeekerProfile (formData: FormData) {
         
         const response = await fetch(process.env.NEXT_PUBLIC_API_URL + `/update-seeker-profile/${session?.id}`, {
             method: 'PUT',
-            body: JSON.stringify(validatedFields.data),
+            body: JSON.stringify(formData.getAll),
           })
 
         const result = await response.json()
@@ -53,6 +55,7 @@ export async function createSeekerProfile (formData: FormData) {
             message: result?.message || 'Something went wrong!'
           }
         }
+
 
         await deleteSession('VERIFICATION');
         return {
@@ -91,18 +94,23 @@ export async function createProviderProfile (formData: FormData) {
         const validatedFields = CreateeProviderProfileSchema.safeParse({
           first_name: formData.get('first_name'),
           last_name: formData.get('last_name'),
+          gender: formData.get('gender'),
+          phone_number: formData.get('phone_number'),
+          date_of_birth: formData.get('date_of_birth'),
           business_name: formData.get('business_name'),
           core_service: formData.get('core_service'),
+          username: formData.get('username'),
           skills: formData.get('skills'),
-          gender: formData.get('gender'),
-          education_level: formData.get('education_level'),
+          available_work_time: formData.get('available_work_time'),
           country: formData.get('country'),
           state: formData.get('state'),
+          post_code: formData.get('post_code'),
           location: formData.get('location'),
           rc_number: formData.get('rc_number'),
-          bio: formData.get('bio'),
-          date_of_birth: formData.get('date_of_birth'),
-          phone_number: formData.get('phone_number'),
+          
+          // education_level: formData.get('education_level'),
+
+          // bio: formData.get('bio'),
           // avatar_file: formData.get('avatar_file'),
         })
 
@@ -115,7 +123,7 @@ export async function createProviderProfile (formData: FormData) {
         
         const response = await fetch(process.env.NEXT_PUBLIC_API_URL + `/update-provider-profile/${session?.id}`, {
             method: 'PUT',
-            body: JSON.stringify(validatedFields.data),
+            body: JSON.stringify(formData.getAll),
           })
         const result = await response.json()
           
